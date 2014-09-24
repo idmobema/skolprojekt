@@ -8,6 +8,6 @@ public class Test {
 		System.out.println("Testar ocksÃ¥");
 		System.out.println("En till test");
 		
-		System.out.println("Testar från min egen gitHub konto.");
+		System.out.println("Test. Test. Test");
 	}
 }
