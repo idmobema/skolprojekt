@@ -6,5 +6,6 @@ public class Test {
 		System.out.println("Testar lite Git här...");
 		System.out.println("Hej hopp.");
 		System.out.println("Testar också");
+		System.out.println("En till test");
 	}
 }
