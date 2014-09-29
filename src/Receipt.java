@@ -1,13 +1,22 @@
 
 public class Receipt {
+	// Alla kvitton använder samma "sidhuvud" och avgränsare, därför är de statiska
+	private static String header;
 	private static String delimiter;
 	
-	public void setDelimiter(String delimiter) {
-		this.delimiter = delimiter;
+	public static void setHeader(String header) {
+		Receipt.header = header;
+	}
+	
+	public static void setDelimiter(String delimiter) {
+		Receipt.delimiter = delimiter;
 	}
 	
 	@Override
 	public String toString() {
-		return delimiter;
+		String str = "";
+		str += header;
+		str += delimiter;
+		return str;
 	}
 }
