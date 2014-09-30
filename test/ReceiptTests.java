@@ -74,4 +74,48 @@ public class ReceiptTests {
 		r.addLine(1, "Apelsiner 750g eko", 29.95, 29.95);
 		assertTrue(r.toString().contains("29.95"));
 	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddLineWithNegativeQuantity() {
+		Receipt r = new Receipt(new MockSale());
+		r.addLine(-1, "Skogaholmslimpa", 19.9, 39.8);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddLineWithZeroQuantity() {
+		Receipt r = new Receipt(new MockSale());
+		r.addLine(0, "Skogaholmslimpa", 19.9, 39.8);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddLineWithTooLargeQuantity() {
+		Receipt r = new Receipt(new MockSale());
+		r.addLine(1000, "Skogaholmslimpa", 19.9, 39.8);
+	}
+	
+	@Test
+	public void testAddLineWithTooLongItemName() {
+		Receipt r = new Receipt(new MockSale());
+		r.addLine(1, "Jordnötssmör Crunchy eko", 33.5, 33.5);
+		assertFalse(r.toString().contains("Jordnötssmör Crunchy eko"));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddLineWithTooShortItemName() {
+		Receipt r = new Receipt(new MockSale());
+		r.addLine(2, "A", 7.5, 15.0);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddLineWithNegativeItemPrice() {
+		Receipt r = new Receipt(new MockSale());
+		r.addLine(1, "Skogaholmslimpa", -23.7, 39.8);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddLineWithNegativeSubTotal() {
+		Receipt r = new Receipt(new MockSale());
+		r.addLine(1, "Skogaholmslimpa", 19.9, -142.1);
+	}
+
 }
