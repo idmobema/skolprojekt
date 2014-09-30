@@ -1,3 +1,6 @@
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Locale;
 
 public class Receipt {
 	// Alla kvitton använder samma "sidhuvud" och avgränsare, därför är de statiska
@@ -9,6 +12,7 @@ public class Receipt {
 	private MockSale sale;
 	private String saleInfo = "";
 	private int receiptNo;
+	private List<String> lines = new ArrayList<>();
 	
 	public Receipt(MockSale ms) {
 		sale = ms;
@@ -24,13 +28,22 @@ public class Receipt {
 		Receipt.delimiter = delimiter;
 	}
 	
-	public void setSaleInfo() {
-		saleInfo = "Kassör: " + sale.getCashier() + "\n";
+	public void createSaleInfo() {
+		saleInfo = "Kvittonr: " + receiptNo + "\n";
+		saleInfo += "Kassör: " + sale.getCashier() + "\n";
 		saleInfo += sale.getDate() + " " + sale.getTime() + "\n";
 	}
 	
 	public int getReceiptNo() {
 		return receiptNo;
+	}
+	
+	public void addLine(int quantity, String itemName, double itemPrice, double subTotal) {
+		String str = "";
+		str += itemName + "\t" + String.format(Locale.US, "%.2f", subTotal) + "\n"; // Priset måste formateras till formatet XX.XX
+		if(quantity > 1)
+			str += "  " + quantity + "st X " + String.format(Locale.US, "%.2f", itemPrice) + "\n";
+		lines.add(str);
 	}
 	
 	@Override
@@ -39,6 +52,8 @@ public class Receipt {
 		str += header;
 		str += delimiter;
 		str += saleInfo;
+		for (String line : lines)
+			str += line;
 		return str;
 	}
 }

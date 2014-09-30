@@ -41,7 +41,7 @@ public class ReceiptTests {
 	@Test
 	public void testSetSaleInfo() {
 		Receipt r = new Receipt(new MockSale());
-		r.setSaleInfo();
+		r.createSaleInfo();
 		assertTrue(r.toString().contains("Roger"));
 		assertTrue(r.toString().contains("2014-09-29"));
 		assertTrue(r.toString().contains("21:11:43"));
@@ -54,5 +54,24 @@ public class ReceiptTests {
 		assertFalse(r1.getReceiptNo() == r2.getReceiptNo());
 		Receipt r3 = new Receipt(new MockSale());
 		assertTrue(r3.getReceiptNo() - r1.getReceiptNo() == 2);
+	}
+	
+	@Test
+	public void testAddLine() {
+		Receipt r1 = new Receipt(new MockSale());
+		Receipt r2 = new Receipt(new MockSale());
+		r1.addLine(2, "Skogaholmslimpa", 19.9, 39.8);
+		assertTrue(r1.toString().length() > r2.toString().length());
+		r2.addLine(1, "Apelsiner 750g eko", 29.95, 29.95);
+	}
+	
+	@Test
+	public void testFormattingOfPrice() {
+		Receipt r = new Receipt(new MockSale());
+		r.addLine(2, "Skogaholmslimpa", 19.9, 39.8);
+		assertTrue(r.toString().contains("19.90"));
+		assertTrue(r.toString().contains("39.80"));
+		r.addLine(1, "Apelsiner 750g eko", 29.95, 29.95);
+		assertTrue(r.toString().contains("29.95"));
 	}
 }
