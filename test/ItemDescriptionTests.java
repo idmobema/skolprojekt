@@ -24,5 +24,20 @@ public class ItemDescriptionTests {
 		assertEquals("Gurka", id.getName());
 	}
 	
+	@Test
+	public void testGetDescription() {
+		assertEquals("En grön grönsak", id.getDescription());
+	}
+	
+	@Test
+	public void testGetItemId() {
+		assertEquals("314", id.getItemId());
+	}
+	
+	@Test
+	public void testToString() {
+		assertEquals(id.getName(), id.toString());
+	}
+	
 
 }
