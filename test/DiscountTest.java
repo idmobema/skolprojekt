@@ -29,6 +29,7 @@ public class DiscountTest {
 	@Test
 	public void testSetProcentage(){
 		d3.setPercentage(20.40);
+		System.out.println("d1's percentage is: " + d1.getPercentage());
 	}
 
 }
