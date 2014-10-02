@@ -1,8 +1,9 @@
 
 public class Discount {
 
-	public static void main(String[] args){
-		System.out.println("Hello Woooooop");
+	private double percentage;
+	
+	public double getPercentage(){
+		return 12.5;
 	}
-
 }
