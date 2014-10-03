@@ -51,12 +51,29 @@ public class Receipt {
 		if (itemPrice <= 0) 
 			throw new IllegalArgumentException("Invalid item price: " + itemPrice + ". Price must not be negative.");
 		if (subTotal <= 0) 
-			throw new IllegalArgumentException("Invalid subtotal: " + subTotal + ". Value must not be negative.");
-		
+			throw new IllegalArgumentException("Invalid subtotal: " + subTotal + ". Value must not be negative.");		
+
 		String str = "";
 		str += itemName + "\t" + String.format(Locale.US, "%.2f", subTotal) + "\n"; // Priset måste formateras till formatet XX.XX
 		if (quantity > 1) // Om större kvantitet än 1, lägg till extrarad med prisuträkning
 			str += "  " + quantity + "st X " + String.format(Locale.US, "%.2f", itemPrice) + "\n";
+		lines.add(str);
+	}
+	
+	public void addLine(double weight, String itemName, double itemPrice, double subTotal) {
+		if (weight <= 0) 
+			throw new IllegalArgumentException("Invalid weight: " + weight + ". Value must be positive.");
+		if (itemName.length() < MIN_NAME_LENGTH)
+			throw new IllegalArgumentException("Invalid item name. Minimum " + MIN_NAME_LENGTH + " characters required.");
+		if (itemName.length() > MAX_NAME_LENGTH)
+			itemName = itemName.substring(0, MAX_NAME_LENGTH);
+		if (itemPrice <= 0) 
+			throw new IllegalArgumentException("Invalid item price: " + itemPrice + ". Price must not be negative.");
+		if (subTotal <= 0) 
+			throw new IllegalArgumentException("Invalid subtotal: " + subTotal + ". Value must not be negative.");		
+
+		String str = "";
+		str += itemName + "\n";
 		lines.add(str);
 	}
 	
