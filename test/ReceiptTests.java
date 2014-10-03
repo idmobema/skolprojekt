@@ -8,22 +8,22 @@ public class ReceiptTests {
 	@Test
 	public void testIfToStringReturnsEmptyString() {
 		Receipt r = new Receipt(new MockSale());
-		Receipt.setDelimiter("");
+		Receipt.createDelimiter('\0');
 		Receipt.setHeader("");
-		assertEquals("", r.toString());
+		assertEquals("", r.toString().trim());
 	}
 	
 	@Test
 	public void testIfToStringReturnsSomething() {
 		Receipt r = new Receipt(new MockSale());
-		Receipt.setDelimiter("----------------------------------------");
+		Receipt.createDelimiter('-');
 		assertTrue(r.toString().length() != 0);
 	}
 	
 	@Test
 	public void testIfToStringReturnsSameString() {
 		Receipt r1 = new Receipt(new MockSale());
-		Receipt.setDelimiter("----------------------------------------");
+		Receipt.createDelimiter('-');
 		Receipt r2 = new Receipt(new MockSale());
 		assertEquals(r1.toString(), r2.toString());
 	}
@@ -128,6 +128,7 @@ public class ReceiptTests {
 		r1.addLine(0.757, item, 24.9, 18.85);
 		assertTrue(r1.toString().length() > r2.toString().length());
 		assertTrue(r1.toString().contains(item));
+		assertTrue(r1.toString().contains("0.757kg"));
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
