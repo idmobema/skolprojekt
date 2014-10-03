@@ -8,6 +8,7 @@ public class Receipt {
 	private static String delimiter = "";
 	// Håller koll på antalet kvitton, används för att ta fram kvittonummer
 	private static int numberOfReceipts = 0;
+	// Konstanter för gemensamma egenskaper
 	private static final int MAX_QUANTITY = 999;
 	private static final int MIN_NAME_LENGTH = 2;
 	private static final int MAX_NAME_LENGTH = 20;
@@ -15,6 +16,7 @@ public class Receipt {
 	
 	private MockSale sale;
 	private String saleInfo = "";
+	private String total = "";
 	private int receiptNo;
 	private List<String> lines = new ArrayList<>();
 	
@@ -24,10 +26,31 @@ public class Receipt {
 		receiptNo = numberOfReceipts;
 	}
 	
-	public static void setHeader(String header) {
+	// Skapar kvittots "sidhuvud"
+	public static void createHeader(String ... headerStrings) {
+		String header = "";
+		for (String str : headerStrings)
+			header += center(str) + "\n";
 		Receipt.header = header;
 	}
 	
+	// Hjälpmetod för att skapa rader med centrerad text
+	private static String center(String str) {
+		int leftSpace, rightSpace = 0;
+		leftSpace = (LINE_WIDTH - str.length()) / 2;
+		rightSpace = LINE_WIDTH - str.length() - leftSpace;
+		return makeSpace(leftSpace) + str + makeSpace(rightSpace);
+	}
+	
+	// Hjälpmetod för att skapa mellanrum
+	private static String makeSpace(int spaces) {
+		String str = "";
+		for (int i = 0; i < spaces; i++)
+			str += " ";
+		return str;
+	}
+	
+	// Skapar avgränsare mellan kvittots olika delar
 	public static void createDelimiter(char delimiterChar) {
 		String delimiter = "";
 		for (int i=0; i < LINE_WIDTH; i++)
@@ -36,6 +59,7 @@ public class Receipt {
 		Receipt.delimiter = delimiter;
 	}
 	
+	// Skapar avsnitt med information om försäljningstillfället
 	public void createSaleInfo() {
 		saleInfo = "Kvittonr: " + receiptNo + "\n";
 		saleInfo += "Kassör: " + sale.getCashier() + "\n";
@@ -52,9 +76,9 @@ public class Receipt {
 			throw new IllegalArgumentException("Invalid quantity: " + quantity + ". Value between 1 and " + MAX_QUANTITY + " required.");
 		itemName = checkItemName(itemName);
 		checkPrices(itemPrice, subTotal);
-		String str = formatLine(itemName, subTotal);
+		String str = itemName + "\t" + formatPrice(subTotal) + "\n";
 		if (quantity > 1) // Om större kvantitet än 1, lägg till extrarad med prisuträkning
-			str += "  " + quantity + "st x " + String.format(Locale.US, "%.2f", itemPrice) + "\n";
+			str += "  " + quantity + "st x " + formatPrice(itemPrice) + "\n";
 		lines.add(str);
 	}
 	
@@ -64,8 +88,8 @@ public class Receipt {
 			throw new IllegalArgumentException("Invalid weight: " + weight + ". Value must be positive.");
 		itemName = checkItemName(itemName);
 		checkPrices(itemPrice, subTotal);
-		String str = formatLine(itemName, subTotal);
-		str += "  " + weight + "kg x " + String.format(Locale.US, "%.2f", itemPrice) + "\n";
+		String str = itemName + "\t" + formatPrice(subTotal) + "\n";
+		str += "  " + weight + "kg x " + formatPrice(itemPrice) + "\n";
 		lines.add(str);
 	}
 	
@@ -86,9 +110,16 @@ public class Receipt {
 			throw new IllegalArgumentException("Invalid subtotal: " + subTotal + ". Value must not be negative.");				
 	}
 	
-	// Hjälpmetod för att formatera kvittorad
-	private String formatLine(String itemName, double subTotal) {
-		return itemName + "\t" + String.format(Locale.US, "%.2f", subTotal) + "\n"; // Priset måste formateras till formatet XX.XX		
+	// Hjälpmetod för att formatera pris
+	private String formatPrice(double price) {
+		return String.format(Locale.US, "%.2f", price);
+	}
+	
+	// Skapar avsnitt med totalpriset
+	public void createTotal() {
+		String priceString = formatPrice(sale.getTotal());
+		total += makeSpace(LINE_WIDTH - 10) + "==========\n";
+		total += makeSpace(LINE_WIDTH - priceString.length()) + priceString + "\n";
 	}
 	
 	@Override
@@ -97,8 +128,10 @@ public class Receipt {
 		str += header;
 		str += delimiter;
 		str += saleInfo;
+		str += delimiter;
 		for (String line : lines)
 			str += line;
+		str += total;
 		return str;
 	}
 }

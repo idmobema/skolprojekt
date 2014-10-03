@@ -9,7 +9,7 @@ public class ReceiptTests {
 	public void testIfToStringReturnsEmptyString() {
 		Receipt r = new Receipt(new MockSale());
 		Receipt.createDelimiter('\0');
-		Receipt.setHeader("");
+		Receipt.createHeader("");
 		assertEquals("", r.toString().trim());
 	}
 	
@@ -29,13 +29,12 @@ public class ReceiptTests {
 	}
 
 	@Test
-	public void testSetHeader() {
-		String header = "      Coop Konsum Midsommarkransen      \n" +
-						"              www.coop.se               \n" +
-						"           Tel.nr: 010-7411160          \n";
-		Receipt.setHeader(header);
+	public void testcreateHeader() {
+		Receipt.createHeader("Coop Konsum Midsommarkransen", "www.coop.se", "Tel.nr: 010-7411160");
 		Receipt r = new Receipt(new MockSale());
 		assertTrue(r.toString().contains("Konsum"));
+		assertTrue(r.toString().contains("www"));
+		assertTrue(r.toString().contains("7411160"));
 	}
 	
 	@Test
@@ -141,5 +140,20 @@ public class ReceiptTests {
 	public void testOtherAddLineWithZeroWeight() {
 		Receipt r = new Receipt(new MockSale());
 		r.addLine(0.0, "Bananer eko", 24.9, 18.85);
+	}
+	
+	@Test
+	public void testIfReceiptContainsTotal() {
+		MockSale sale = new MockSale();
+		Receipt r = new Receipt(sale);
+		r.createTotal();
+		assertTrue(r.toString().contains("" + sale.getTotal()));
+	}
+	
+	@Test
+	public void testFormattingOfTotalPrice() {
+		Receipt r = new Receipt(new MockSale());
+		r.createTotal();
+		assertTrue(r.toString().contains("606.56"));
 	}
 }
