@@ -2,22 +2,22 @@
 public class Discount {
 
 	private double percentage;
+	private TimeValidity timeValidity;
 	
-	public Discount(double percentage){
-		try{
-			checkPercentage(percentage);
-			this.percentage = percentage;
-		}
-		catch(IllegalArgumentException iae){
-			System.out.println("Percentage has to be between 0 and 75 inclusive.");
-		}
+	public Discount(double percentage, TimeValidity timeValidity){
+	
+		checkPercentage(percentage);	
 		
-		
+		this.percentage = percentage;
+		this.timeValidity = timeValidity;
+
 	}
 
 	private void checkPercentage(double percentage) {
-		if(percentage < 0 || percentage > 75)
-			throw new IllegalArgumentException ();
+		if(percentage >= 1 && percentage <= 75)
+			return;
+		else
+			throw new IllegalArgumentException("Percentage must be in the range 1 to 75 inclusive.");
 	}
 	
 	public double getPercentage(){
@@ -25,12 +25,12 @@ public class Discount {
 	}
 	
 	public void setPercentage(double percentage){
-		try{
+		
 			checkPercentage(percentage);
 			this.percentage = percentage;
-		}
-		catch(IllegalArgumentException iae){
-			System.out.println("Percentage has to be between 0 and 75 inclusive.");
-		}
+	}
+	
+	public TimeValidity getTimeValidity(){
+		return timeValidity;
 	}
 }
