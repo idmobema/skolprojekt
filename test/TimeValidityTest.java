@@ -1,7 +1,11 @@
 /** 
  * IMPORTANT!!!
  * Most, if not all, of the tests are time related (/ bounded) to the current system's time.
- * Tests are constrained to FAIL if the time validity is SET / CREATED for a date that PRECEDES the current date.*/
+ * Tests are constrained to FAIL if the time validity is SET / CREATED for a date that PRECEDES the current date.
+ * Read more about the rules on assigning a time validity to a Discount in TimeValidity.java and 
+ * TimeValidityDatesChecker.java 
+ * 
+ * #BC141004# */
 
 import static org.junit.Assert.*;
 
