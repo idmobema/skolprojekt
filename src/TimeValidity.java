@@ -1,4 +1,4 @@
-/** TimeValidity is coupled to the Discount class. (Most) Usually a discount has a period of validity.
+/** TimeValidity is top level class coupled to the Discount class. (Most) Usually a discount has a period of validity.
  * The setter for the fields are private in order to simplify the rules of changing the validity period.
  * For example suppose that the validity for a certain discount is from 5th of Nov '14 to 10th of Dec '14.
  * Suppose also that the setters for the fields are public and You want to set the validity's startDay to 31.
@@ -179,6 +179,6 @@ public class TimeValidity {
 	public static void main(String[] args){
 		TimeValidity tv = new TimeValidity(2014, 10, 30, 2015, 1, 28);
 		System.out.println(tv);
-		System.out.println(CALENDAR);
+		
 	}
 }
