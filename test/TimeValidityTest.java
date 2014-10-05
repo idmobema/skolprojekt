@@ -86,4 +86,25 @@ public class TimeValidityTest {
 		timeValidity = new TimeValidity(2014, 10, 10, 2014, 11, 15);
 		timeValidity.changePeriod(2015, 1, 29, 2015, 10, 11);
 	}
+	
+	@Test
+	public void testEquals(){
+		TimeValidity tV1 = new TimeValidity(2014, 10, 10, 2014, 11, 15);
+		TimeValidity tV2 = new TimeValidity(2014, 10, 10, 2014, 11, 15);
+		boolean expected = true;
+		boolean actual = tV1.equals(tV2);
+		
+		assertTrue(expected && actual);
+	}
+	
+	@Test
+	public void testEquals2(){
+		TimeValidity tV1 = new TimeValidity(2014, 10, 10, 2014, 11, 15);
+		TimeValidity tV2 = new TimeValidity(2014, 10, 10, 2014, 11, 15);
+		
+		boolean expected = false;
+		boolean actual = tV1 == tV2;
+		
+		assertFalse(expected || actual);
+	}
 }

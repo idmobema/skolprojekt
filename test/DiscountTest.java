@@ -1,3 +1,12 @@
+/** 
+ * IMPORTANT!!!
+ * Most, if not all, of the tests are time related (/ bounded) to the current system's time.
+ * Tests are constrained to FAIL if the time validity is SET / CREATED for a date that PRECEDES the current date.
+ * Read more about the rules on assigning a time validity to a Discount in TimeValidity.java and 
+ * TimeValidityDatesChecker.java 
+ * 
+ * #BC141004# */
+
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -7,14 +16,12 @@ import org.junit.After;
 public class DiscountTest {
 
 	Discount d1, d2, d3, d4, d5;
+	TimeValidity tV;
 	@Before
-	public void setUpDiscountObjects(){
-		//d1 = new Discount(-1, new TimeValidity(2013, 8, 5, 2013, 8, 10));
-		//d2 = new Discount(0, new TimeValidity(2013, 8, 5, 2013, 8, 10));
-		d3 = new Discount(12.34, new TimeValidity(2013, 8, 5, 2013, 8, 10));
-		d4 = new Discount(75, new TimeValidity(2013, 8, 5, 2013, 8, 10));
-		//d5 = new Discount(76, new TimeValidity(2013, 8, 5, 2013, 8, 10));
+	public void setUp(){
+		tV = new TimeValidity(2015, 2, 15, 2015, 2, 20);
 	}
+
 	
 	@After
 	public void tearDown(){
@@ -27,12 +34,13 @@ public class DiscountTest {
 	
 	@Test
 	public void testGetPercentage() {
+		d3 = new Discount(12.34, 2015, 2, 15, 2015, 2, 20);
 		assertTrue("should return 12.34", d3.getPercentage() == 12.34);
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void testCheckPercentage(){
-		d1 = new Discount(-1, new TimeValidity(2013, 8, 5, 2013, 8, 10));
+		d1 = new Discount(-1, 2013, 8, 5, 2013, 8, 10);
 		
 		assertNull("this obj should not have been created", d1);
 	}
@@ -40,6 +48,7 @@ public class DiscountTest {
 	@Test
 	public void testSetPercentage(){
 		double expected = 20.40;
+		d3 = new Discount(20.40, 2015, 2, 15, 2015, 2, 20);
 		d3.setPercentage(20.40);
 		
 		assertTrue(expected == d3.getPercentage());
@@ -47,17 +56,41 @@ public class DiscountTest {
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void testSetPercentageWithIllegalValues(){
-		d3.setPercentage(0);
-		d4.setPercentage(75.01);
+		d3 = new Discount(1, 2015, 2, 15, 2015, 2, 20);
+//		d3.setPercentage(0);
+//		d4 = new Discount(50, tV);
+//		d4.setPercentage(75.01);
 		d3.setPercentage(.99);
 	}
 	
-//	@Test
-//	public void testGetTimeValidity(){
-//		TimeValidity expected = new TimeValidity(2013, 8, 5, 2013, 8, 10);
-//		TimeValidity result = d3.getTimeValidity();
-//		
-//		assertTrue("should return the dates the timevalidity is in effect", expected.equals(result));
-//	}
+	@Test
+	public void testGetTimeValidity(){
+		d3 = new Discount(1, 2015, 2, 15, 2015, 2, 20);
+		TimeValidity expected = tV;
+		TimeValidity actual = d3.getTimeValidity();
+		
+		assertTrue(expected.compareTo(actual) == 0);
+		
+	}
+	
+	@Test
+	public void testToString(){
+		d3 = new Discount(1, 2015, 2, 15, 2015, 2, 20);
+		String expected = "Percentage: 1.0\nValid through: " + tV;
+		String actual = d3.toString();
+		
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void testSetTimeValidity(){
+		d3 = new Discount(1, 2015, 2, 15, 2015, 2, 20);
+		d3.setTimeValidity(2015, 2, 15, 2015, 2, 20);
+		TimeValidity expected = new TimeValidity(2015, 2, 15, 2015, 2, 20);
+		TimeValidity actual = d3.getTimeValidity();
+		
+		assertEquals(expected, actual);
+		
+	}
 
 }

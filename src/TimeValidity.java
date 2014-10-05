@@ -18,67 +18,72 @@
  * #BC141004#*/
 
 
-public class TimeValidity {
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+public class TimeValidity implements Comparable<TimeValidity>{
 	
 
-	private int startDay, startMonth, startYear, endDay, endMonth, endYear;
+	private GregorianCalendar startDate, endDate;
 	
 	
 	/** Constructor */
 	public TimeValidity(int startYear, int startMonth, int startDay, int endYear, int endMonth, int endDay){
+
 		TimeValidityDatesChecker datesChecker = new TimeValidityDatesChecker();
 		datesChecker.checkDates(startYear, startMonth, startDay, endYear, endMonth, endDay);
 		
-		this.startDay = startDay; this.startMonth = startMonth; this.startYear = startYear;
-		this.endDay = endDay; this.endMonth = endMonth; this.endYear = endYear;
+		startDate = new GregorianCalendar(startYear , startMonth, startDay);
+		endDate = new GregorianCalendar(endYear, endMonth, endDay);
+
 	}
 
 	public int getStartDay() {
-		return startDay;
+		return startDate.get(Calendar.DAY_OF_MONTH);
 	}
 
 	public int getStartMonth() {
-		return startMonth;
+		return startDate.get(Calendar.MONTH);
 	}
 
 	public int getStartYear() {
-		return startYear;
+		return startDate.get(Calendar.YEAR);
 	}
 
 	public int getEndDay() {
-		return endDay;
+		return endDate.get(Calendar.DAY_OF_MONTH);
 	}
 
 	public int getEndMonth() {
-		return endMonth;
+		return endDate.get(Calendar.MONTH);
 	}
 
 	public int getEndYear() {
-		return endYear;
+		return endDate.get(Calendar.YEAR);
 	}
 
 	private void setStartDay(int startDay) {
-		this.startDay = startDay;
+		startDate.set(Calendar.DAY_OF_MONTH, startDay);
 	}
 
 	private void setStartMonth(int startMonth) {
-		this.startMonth = startMonth;
+		startDate.set(Calendar.MONTH, startMonth);
 	}
 
 	private void setStartYear(int startYear) {
-		this.startYear = startYear;
+		startDate.set(Calendar.YEAR, startYear);
 	}
 
 	private void setEndDay(int endDay) {
-		this.endDay = endDay;
+		endDate.set(Calendar.DAY_OF_MONTH, endDay);
 	}
 
 	private void setEndMonth(int endMonth) {
-		this.endMonth = endMonth;
+		endDate.set(Calendar.MONTH, endMonth);
 	}
 
 	private void setEndYear(int endYear) {
-		this.endYear = endYear;
+		endDate.set(Calendar.YEAR, endYear);
 	}
 
 	/** Changes the discount's time validity under the rules stipulated in TimeValidityDatesChecker.java */
@@ -105,10 +110,31 @@ public class TimeValidity {
 
 	/** The startMonth and endMonth values to be read as +1. */
 	public String toString(){
+		
 		String result = "";
-		result += "Start date: " + startYear + "-" + startMonth + "-" + startDay + "\n";
-		result += "End date: " + endYear + "-" + endMonth + "-" + endDay;
+		
+		result += "Start date: " + this.getStartDay() + "/" + this.getStartMonth() + "/" + this.getStartYear() + "\n";
+		result += "End date: " + this.getEndDay() + "/" + this.getEndMonth() + "/" + this.getEndYear();
 		
 		return result;
+	}
+
+	@Override
+	public int compareTo(TimeValidity timeValidity) {
+		
+		if(this.startDate.equals(timeValidity.startDate) && this.endDate.equals(timeValidity.endDate))
+			return 0;
+		else
+			if(this.startDate.before(((TimeValidity)timeValidity).startDate))
+				return -1;
+			else
+				return 1;
+	}
+	@Override
+	public boolean equals(Object tV){
+		if(this.compareTo((TimeValidity)tV) == 0)
+			return true;
+		else
+			return false;
 	}
 }

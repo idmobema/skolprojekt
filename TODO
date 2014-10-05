@@ -13,3 +13,20 @@ is possible to return the current month's maximum day.
 6. Refactor the checkDate. Possible new class DateChecker
 
 7. toString() for TimeValidity
+
+8. Refactor TimeValidityDatesChecker.checkStartEndOrder()
+ and TimeValidityDatesChecker.checkRetroactiveStartDate()
+9. Describe TimeValidityDatesChecker
+
+
+
+10. toString() for Discount
+11. Describe Discount class
+12. setTimeValidity()for Discount
+13. implement compareTo and equals for TimeValidity
+14. change the TimeValidity class
+	14.1 The fields should be private Date startDate, endDate
+	
+	MONDAY
+1. Implement compareTo and equals for Discount class.
+2. Start another class from the diagram.
