@@ -1,55 +1,60 @@
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-
+import org.junit.Before;
 
 public class ReceiptTests {
-
+	private MockSale sale;
+	private Receipt r1, r2;
+	private String item1, item2;
+	
+	@Before
+	public void setUp() {
+		sale = new MockSale();
+		r1 = new Receipt(sale);
+		r2 = new Receipt(sale);
+		item1 = "Skogaholmslimpa";
+		item2 = "Bananer eko";
+	}
+	
 	@Test
 	public void testIfToStringReturnsEmptyString() {
-		Receipt r = new Receipt(new MockSale());
 		Receipt.createDelimiter('\0');
 		Receipt.createHeader("");
-		assertEquals("", r.toString().trim());
+		Receipt.createFooter("");
+		assertEquals("", r1.toString().trim());
 	}
 	
 	@Test
 	public void testIfToStringReturnsSomething() {
-		Receipt r = new Receipt(new MockSale());
 		Receipt.createDelimiter('-');
-		assertTrue(r.toString().length() != 0);
+		assertTrue(r1.toString().length() != 0);
 	}
 	
 	@Test
 	public void testIfToStringReturnsSameString() {
-		Receipt r1 = new Receipt(new MockSale());
 		Receipt.createDelimiter('-');
-		Receipt r2 = new Receipt(new MockSale());
 		assertEquals(r1.toString(), r2.toString());
 	}
 
 	@Test
-	public void testcreateHeader() {
+	public void testCreateHeader() {
 		Receipt.createHeader("Coop Konsum Midsommarkransen", "www.coop.se", "Tel.nr: 010-7411160");
-		Receipt r = new Receipt(new MockSale());
-		assertTrue(r.toString().contains("Konsum"));
-		assertTrue(r.toString().contains("www"));
-		assertTrue(r.toString().contains("7411160"));
+		assertTrue(r1.toString().contains("Konsum"));
+		assertTrue(r1.toString().contains("www"));
+		assertTrue(r1.toString().contains("7411160"));
 	}
 	
 	@Test
 	public void testSetSaleInfo() {
-		Receipt r = new Receipt(new MockSale());
-		r.createSaleInfo();
-		assertTrue(r.toString().contains("Roger"));
-		assertTrue(r.toString().contains("2014-09-29"));
-		assertTrue(r.toString().contains("21:11:43"));
+		r1.createSaleInfo();
+		assertTrue(r1.toString().contains("Roger"));
+		assertTrue(r1.toString().contains("2014-09-29"));
+		assertTrue(r1.toString().contains("21:11:43"));
 	}
 	
 	@Test
 	public void testIfReceiptNoIncreases() {
-		Receipt r1 = new Receipt(new MockSale());
-		Receipt r2 = new Receipt(new MockSale());
 		assertFalse(r1.getReceiptNo() == r2.getReceiptNo());
 		Receipt r3 = new Receipt(new MockSale());
 		assertTrue(r3.getReceiptNo() - r1.getReceiptNo() == 2);
@@ -57,103 +62,111 @@ public class ReceiptTests {
 	
 	@Test
 	public void testAddLine() {
-		Receipt r1 = new Receipt(new MockSale());
-		Receipt r2 = new Receipt(new MockSale());
-		String item = "Skogaholmslimpa";
-		r1.addLine(2, item, 19.9, 39.8);
+		r1.addLine(2, item1, 19.9, 39.8);
 		assertTrue(r1.toString().length() > r2.toString().length());
-		assertTrue(r1.toString().contains(item));
+		assertTrue(r1.toString().contains(item1));
 	}
 	
 	@Test
 	public void testFormattingOfPrice() {
-		Receipt r = new Receipt(new MockSale());
-		r.addLine(2, "Skogaholmslimpa", 19.9, 39.8);
-		assertTrue(r.toString().contains("19.90"));
-		assertTrue(r.toString().contains("39.80"));
-		r.addLine(1, "Apelsiner 750g eko", 29.95, 29.95);
-		assertTrue(r.toString().contains("29.95"));
+		r1.addLine(2, item1, 19.9, 39.8);
+		assertTrue(r1.toString().contains("19.90"));
+		assertTrue(r1.toString().contains("39.80"));
+		r1.addLine(1, "Apelsiner 750g eko", 29.95, 29.95);
+		assertTrue(r1.toString().contains("29.95"));
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testAddLineWithNegativeQuantity() {
-		Receipt r = new Receipt(new MockSale());
-		r.addLine(-1, "Skogaholmslimpa", 19.9, 39.8);
+		r1.addLine(-1, item1, 19.9, 39.8);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testAddLineWithZeroQuantity() {
-		Receipt r = new Receipt(new MockSale());
-		r.addLine(0, "Skogaholmslimpa", 19.9, 39.8);
+		r1.addLine(0, item1, 19.9, 39.8);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testAddLineWithTooLargeQuantity() {
-		Receipt r = new Receipt(new MockSale());
-		r.addLine(1000, "Skogaholmslimpa", 19.9, 39.8);
+		r1.addLine(1000, item1, 19.9, 39.8);
 	}
 	
 	@Test
 	public void testAddLineWithTooLongItemName() {
-		Receipt r = new Receipt(new MockSale());
 		String item = "Jordnötssmör Crunchy eko";
-		r.addLine(1, item, 33.5, 33.5);
-		assertFalse(r.toString().contains(item));
+		r1.addLine(1, item, 33.5, 33.5);
+		assertFalse(r1.toString().contains(item));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testAddLineWithTooShortItemName() {
-		Receipt r = new Receipt(new MockSale());
-		r.addLine(2, "A", 7.5, 15.0);
+		r1.addLine(2, "A", 7.5, 15.0);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testAddLineWithNegativeItemPrice() {
-		Receipt r = new Receipt(new MockSale());
-		r.addLine(1, "Skogaholmslimpa", -23.7, 39.8);
+		r1.addLine(1, item1, -23.7, 39.8);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testAddLineWithNegativeSubTotal() {
-		Receipt r = new Receipt(new MockSale());
-		r.addLine(1, "Skogaholmslimpa", 19.9, -142.1);
+		r1.addLine(1, item1, 19.9, -142.1);
 	}
 
 	@Test
 	public void testOtherAddLine() {
-		Receipt r1 = new Receipt(new MockSale());
-		Receipt r2 = new Receipt(new MockSale());
-		String item = "Bananer eko";
-		r1.addLine(0.757, item, 24.9, 18.85);
+		r1.addLine(0.757, item2, 24.9, 18.85);
 		assertTrue(r1.toString().length() > r2.toString().length());
-		assertTrue(r1.toString().contains(item));
+		assertTrue(r1.toString().contains(item2));
 		assertTrue(r1.toString().contains("0.757kg"));
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testOtherAddLineWithNegativeWeight() {
-		Receipt r = new Receipt(new MockSale());
-		r.addLine(-0.757, "Bananer eko", 24.9, 18.85);
+		r1.addLine(-0.757, item2, 24.9, 18.85);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testOtherAddLineWithZeroWeight() {
-		Receipt r = new Receipt(new MockSale());
-		r.addLine(0.0, "Bananer eko", 24.9, 18.85);
+		r1.addLine(0.0, item2, 24.9, 18.85);
 	}
 	
 	@Test
 	public void testIfReceiptContainsTotal() {
-		MockSale sale = new MockSale();
-		Receipt r = new Receipt(sale);
-		r.createTotal();
-		assertTrue(r.toString().contains("" + sale.getTotal()));
+		r1.createTotal();
+		assertTrue(r1.toString().contains("" + sale.getTotal()));
 	}
 	
 	@Test
 	public void testFormattingOfTotalPrice() {
-		Receipt r = new Receipt(new MockSale());
-		r.createTotal();
-		assertTrue(r.toString().contains("606.56"));
+		r1.createTotal();
+		assertTrue(r1.toString().contains("606.56"));
+	}
+	
+	@Test
+	public void testDeleteLine() {
+		r1.addLine(0.757, item2, 24.9, 18.85);
+		r1.addLine(2, item1, 19.9, 39.8);
+		assertTrue(r1.toString().contains(item2));
+		r1.deleteLine(item2);
+		assertFalse(r1.toString().contains(item2));
+		assertTrue(r1.toString().contains(item1));
+		r1.deleteLine(item1);
+		assertFalse(r1.toString().contains(item1));
+	}
+
+	@Test
+	public void testCreateFooter() {
+		Receipt.createFooter("Tack för att du handlade på Coop!", "*** VÄLKOMMEN ÅTER! ***");
+		assertTrue(r1.toString().contains("Tack"));
+		assertTrue(r1.toString().contains("VÄLKOMMEN"));
+	}	
+
+	@Test
+	public void testFormattingOfReceiptLine() {
+		String subTotal = "39.80";
+		String receiptLine = r1.formatLine(item1, subTotal);
+		assertEquals(receiptLine.length(), 41);
+		assertEquals(subTotal, receiptLine.substring(35, 40));
 	}
 }
