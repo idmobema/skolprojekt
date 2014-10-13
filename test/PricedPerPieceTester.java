@@ -52,7 +52,7 @@ public class PricedPerPieceTester {
 	}
 	
 	@Test
-	public void testGetUnitPrice(){
+	public void testGetUnitPriceWithoutSpecialOfferSet(){
 		item = new PricedPerPiece("Kaf08NES002", 58.60);
 		double expected = 58.60;
 		double actual = item.getUnitPrice();
@@ -133,7 +133,7 @@ public class PricedPerPieceTester {
 	}
 	
 	@Test
-	public void testGetUnitPriceWith(){
+	public void testGetUnitPriceWithSpecialOfferSet(){
 		item = new PricedPerPiece("Gla10GBA065", 35.30);
 		item.setSpecialOfferDiscount("2ForThePriceOf1", 2015, 2, 15, 2015, 2, 20);
 		((SpecialOffer) item.getDiscount()).setBuyQuantity(1);
@@ -143,6 +143,17 @@ public class PricedPerPieceTester {
 		double finalPriceActual = item.getUnitPrice();
 		
 		assertTrue(finalPriceExpected == finalPriceActual);
+	}
+	
+	@Test
+	public void testGetUnitPriceWithPriceDiscountSet(){
+		item = new PricedPerPiece("Äpp21DRI014", 50.0);
+		item.setPriceDiscount(50.0, 2015, 2, 15, 2015, 2, 20);
+
+		double expected = 25.0;
+		double actual = item.getUnitPrice();
+		
+		assertTrue(expected == actual);
 	}
 
 }
