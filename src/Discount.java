@@ -1,5 +1,5 @@
 /** An item might or might not have a discount. This simple class is thought to hold
- * and a "valid through" field that is an instantiation of the TimeValidity class.
+ * a "valid through" field that is an instantiation of the TimeValidity class.
  * Rules regarding the time validity of a discount are to be found in TimeValidity and
  * TimeValidityDatesChecker classes.
  * 
@@ -25,7 +25,7 @@ public abstract class Discount{
 	
 
 
-	public abstract String getDiscountType();
+	public abstract String getOfferName();
 	
 	
 	@Override
@@ -35,7 +35,7 @@ public abstract class Discount{
 			return false;
 		Discount other = (Discount) obj;
 
-		if(this.getTimeValidity() == other.timeValidity && this.getDiscountType().equals(other.getDiscountType()))
+		if(this.getTimeValidity() == other.timeValidity && this.getOfferName().equals(other.getOfferName()))
 			return true;
 		else
 			return false;

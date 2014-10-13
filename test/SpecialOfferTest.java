@@ -67,9 +67,9 @@ public class SpecialOfferTest {
 	}
 	
 	@Test
-	public void testGetDiscountType(){
+	public void testGetOfferName(){
 		Discount sO = new SpecialOffer("TwoForThePriceOfOne", 2015, 4, 20, 2015, 4, 25);
-		String actual =sO.getDiscountType();
+		String actual =sO.getOfferName();
 		String expected = "TwoForThePriceOfOne";
 		
 		assertEquals(expected, actual);

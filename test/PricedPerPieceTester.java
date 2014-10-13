@@ -148,12 +148,36 @@ public class PricedPerPieceTester {
 	@Test
 	public void testGetUnitPriceWithPriceDiscountSet(){
 		item = new PricedPerPiece("Äpp21DRI014", 50.0);
-		item.setPriceDiscount(50.0, 2015, 2, 15, 2015, 2, 20);
+		item.setPriceDiscount(10.0, 2015, 2, 15, 2015, 2, 20);
 
-		double expected = 25.0;
+		double expected = 45.0;
 		double actual = item.getUnitPrice();
 		
 		assertTrue(expected == actual);
+	}
+	
+	@Test
+	public void testEquals(){
+		Item item1 = new PricedPerPiece("Kor20GÄV058", 59.49);
+		item1.setSpecialOfferDiscount("2ForThePriceOf1", 2015, 2, 15, 2015, 2, 20);
+		Item item2 = new PricedPerPiece("Kor20GÄV058", 59.49);
+		item2.setSpecialOfferDiscount("2ForThePriceOf1", 2015, 2, 15, 2015, 2, 20);
+		
+		assertEquals(item1, item2);
+	}
+	
+	@Test
+	public void testToString(){
+		item = new PricedPerPiece("Äpp21DRI014", 50.0);
+		item.setPriceDiscount(15.0, 2015, 2, 15, 2015, 2, 20);
+		
+		String expected = "Item ID: " + item.getID();
+		expected += "\nDiscount: " + item.getDiscount();
+		expected += "\nUnit Price: " + item.getUnitPrice();
+		
+		String actual = item.toString();
+		
+		assertEquals(expected, actual);
 	}
 
 }

@@ -71,7 +71,7 @@ public class PriceDiscountTest {
 	@Test
 	public void testToString(){
 		d3 = new PriceDiscount(1, 2015, 2, 15, 2015, 2, 20);
-		String expected = d3.getDiscountType() + "\nValid through:\n" + tV + "\nPercentage: 1.0";
+		String expected = d3.getOfferName() + "\nValid through:\n" + tV + "\nPercentage: 1.0";
 		String actual = d3.toString();
 		
 		assertEquals(expected, actual);
