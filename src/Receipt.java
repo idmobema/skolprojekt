@@ -3,16 +3,17 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class Receipt {
-	// Alla kvitton använder samma "sidhuvud" och avgränsare, därför är de statiska
+	// Alla kvitton använder samma "sidhuvud", "sidfot" och avgränsare, därför är de statiska
 	private static String header = "";
+	private static String footer = "";
 	private static String delimiter = "";
 	// Håller koll på antalet kvitton, används för att ta fram kvittonummer
 	private static int numberOfReceipts = 0;
 	// Konstanter för gemensamma egenskaper
-	private static final int MAX_QUANTITY = 999;
-	private static final int MIN_NAME_LENGTH = 2;
-	private static final int MAX_NAME_LENGTH = 20;
-	private static final int LINE_WIDTH = 40;
+	public static final int MAX_QUANTITY = 999;
+	public static final int MIN_NAME_LENGTH = 2;
+	public static final int MAX_NAME_LENGTH = 20;
+	public static final int LINE_WIDTH = 40;
 	
 	private MockSale sale;
 	private String saleInfo = "";
@@ -32,6 +33,14 @@ public class Receipt {
 		for (String str : headerStrings)
 			header += center(str) + "\n";
 		Receipt.header = header;
+	}
+	
+	// Skapar kvittots "sidfot"
+	public static void createFooter(String ... footerStrings) {
+		String footer = "";
+		for (String str : footerStrings)
+			footer += center(str) + "\n";
+		Receipt.footer = footer;		
 	}
 	
 	// Hjälpmetod för att skapa rader med centrerad text
@@ -76,7 +85,7 @@ public class Receipt {
 			throw new IllegalArgumentException("Invalid quantity: " + quantity + ". Value between 1 and " + MAX_QUANTITY + " required.");
 		itemName = checkItemName(itemName);
 		checkPrices(itemPrice, subTotal);
-		String str = itemName + "\t" + formatPrice(subTotal) + "\n";
+		String str = formatLine(itemName, formatPrice(subTotal));
 		if (quantity > 1) // Om större kvantitet än 1, lägg till extrarad med prisuträkning
 			str += "  " + quantity + "st x " + formatPrice(itemPrice) + "\n";
 		lines.add(str);
@@ -88,7 +97,7 @@ public class Receipt {
 			throw new IllegalArgumentException("Invalid weight: " + weight + ". Value must be positive.");
 		itemName = checkItemName(itemName);
 		checkPrices(itemPrice, subTotal);
-		String str = itemName + "\t" + formatPrice(subTotal) + "\n";
+		String str = formatLine(itemName, formatPrice(subTotal));
 		str += "  " + weight + "kg x " + formatPrice(itemPrice) + "\n";
 		lines.add(str);
 	}
@@ -114,6 +123,12 @@ public class Receipt {
 	private String formatPrice(double price) {
 		return String.format(Locale.US, "%.2f", price);
 	}
+	
+	// Hjälpmetod för att formatera kvittorad, protected för att underlätta testning
+	protected String formatLine(String first, String second) {
+		int numberOfSpaces = LINE_WIDTH - first.length() - second.length();		
+		return first + makeSpace(numberOfSpaces) + second + "\n";
+	}
 
 	public void deleteLine(String itemName) {
 		String lineToRemove = null;
@@ -128,7 +143,8 @@ public class Receipt {
 	public void createTotal() {
 		String priceString = formatPrice(sale.getTotal());
 		total += makeSpace(LINE_WIDTH - 10) + "==========\n";
-		total += makeSpace(LINE_WIDTH - priceString.length()) + priceString + "\n";
+		total += formatLine("TOTALT ATT BETALA", priceString);
+		//total += makeSpace(LINE_WIDTH - priceString.length()) + priceString + "\n";
 	}
 	
 	@Override
@@ -141,6 +157,8 @@ public class Receipt {
 		for (String line : lines)
 			str += line;
 		str += total;
+		str += delimiter;
+		str += footer;
 		return str;
 	}
 }

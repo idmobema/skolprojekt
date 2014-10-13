@@ -21,6 +21,7 @@ public class ReceiptTests {
 	public void testIfToStringReturnsEmptyString() {
 		Receipt.createDelimiter('\0');
 		Receipt.createHeader("");
+		Receipt.createFooter("");
 		assertEquals("", r1.toString().trim());
 	}
 	
@@ -37,7 +38,7 @@ public class ReceiptTests {
 	}
 
 	@Test
-	public void testcreateHeader() {
+	public void testCreateHeader() {
 		Receipt.createHeader("Coop Konsum Midsommarkransen", "www.coop.se", "Tel.nr: 010-7411160");
 		assertTrue(r1.toString().contains("Konsum"));
 		assertTrue(r1.toString().contains("www"));
@@ -152,5 +153,20 @@ public class ReceiptTests {
 		assertTrue(r1.toString().contains(item1));
 		r1.deleteLine(item1);
 		assertFalse(r1.toString().contains(item1));
+	}
+
+	@Test
+	public void testCreateFooter() {
+		Receipt.createFooter("Tack för att du handlade på Coop!", "*** VÄLKOMMEN ÅTER! ***");
+		assertTrue(r1.toString().contains("Tack"));
+		assertTrue(r1.toString().contains("VÄLKOMMEN"));
+	}	
+
+	@Test
+	public void testFormattingOfReceiptLine() {
+		String subTotal = "39.80";
+		String receiptLine = r1.formatLine(item1, subTotal);
+		assertEquals(receiptLine.length(), 41);
+		assertEquals(subTotal, receiptLine.substring(35, 40));
 	}
 }
