@@ -114,6 +114,15 @@ public class Receipt {
 	private String formatPrice(double price) {
 		return String.format(Locale.US, "%.2f", price);
 	}
+
+	public void deleteLine(String itemName) {
+		String lineToRemove = null;
+		for (String line : lines) {
+			if (line.contains(itemName))
+				lineToRemove = line;
+		}
+		lines.remove(lineToRemove);
+	}
 	
 	// Skapar avsnitt med totalpriset
 	public void createTotal() {
