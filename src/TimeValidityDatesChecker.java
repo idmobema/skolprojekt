@@ -24,7 +24,7 @@ import java.util.GregorianCalendar;
 public class TimeValidityDatesChecker {
 
 	
-	private GregorianCalendar timeValidityCalendar = new GregorianCalendar();
+	private Calendar timeValidityCalendar = new GregorianCalendar();
 	
 	public TimeValidityDatesChecker(){
 		this.timeValidityCalendar = new GregorianCalendar();
@@ -43,6 +43,7 @@ public class TimeValidityDatesChecker {
 		checkDateBoundaries(startYear, startMonth, startDay, endYear, endMonth,
 				endDay);
 	}
+	
 	/** Checks both the boundaries for start and end dates. */
 	private void checkDateBoundaries(int startYear, int startMonth,
 			int startDay, int endYear, int endMonth, int endDay) {
@@ -55,7 +56,7 @@ public class TimeValidityDatesChecker {
 	 * and for the startMonth being between 0 and 11 inclusive*/
 	private void checkStartMonthAndStartDayBoundaries(int startYear, int startMonth, int startDay) {
 		
-		GregorianCalendar temp = new GregorianCalendar(startYear, startMonth, 1);
+		Calendar temp = new GregorianCalendar(startYear, startMonth, 1);
 		int daysInThatMonth = temp.getActualMaximum(Calendar.DAY_OF_MONTH);
 		
 		if(startDay < 1 || startDay > daysInThatMonth || startMonth > 11 || startMonth < 0)
@@ -66,7 +67,7 @@ public class TimeValidityDatesChecker {
 	 * and for the endMonth being between 0 and 11 inclusive*/
 	private void checkEndMonthAndEndDayBoundaries(int endYear, int endMonth, int endDay) {
 		
-		GregorianCalendar temp = new GregorianCalendar(endYear, endMonth, 1);
+		Calendar temp = new GregorianCalendar(endYear, endMonth, 1);
 		int daysInThatMonth = temp.getActualMaximum(Calendar.DAY_OF_MONTH);
 		
 		if(endDay < 1 || endDay > daysInThatMonth || endMonth > 11 || endMonth < 0)

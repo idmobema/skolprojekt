@@ -58,12 +58,7 @@ public class SpecialOffer extends Discount{
 		return getFreeQuantity;
 	}
 	
-	public String toString(){
-		String result = "Identifier: " + discountType + "\n" + super.toString();
-		result += "\nBuy " + buyQuantity + " Get " + getFreeQuantity;
-		
-		return result;
-	}
+
 	
 	public boolean isOfferActive(){
 		return buyQuantityIsSet() && getFreeQuantityIsSet();
@@ -73,4 +68,36 @@ public class SpecialOffer extends Discount{
 		return getFreeQuantity > 0;
 	}
 
+	@Override
+	public boolean equals(Object obj){
+		if(!(obj instanceof SpecialOffer) || obj == null)
+			return false;
+		
+		SpecialOffer another = (SpecialOffer) obj;
+		boolean sameBuyQuantity = buyQuantity == another.getBuyQuantity();
+		boolean sameGetFreeQuantity = getFreeQuantity == another.getGetFreeQuantity();
+		boolean sameDiscountType = discountType.equals(another.getDiscountType());
+		boolean sameTimeValidity = this.getTimeValidity().equals(another.getTimeValidity());
+		
+		return sameDiscountType && sameBuyQuantity && sameGetFreeQuantity && sameTimeValidity;
+	}
+	
+	@Override
+	public int hashCode(){
+		int hash = 1;
+		
+		hash = hash * 17 + (discountType == null ? 0 : discountType.hashCode());
+		hash = hash * 23 + buyQuantity;
+		hash = hash * 13 + getFreeQuantity;
+		hash = hash * 31 + (getTimeValidity() == null ? 0 : getTimeValidity().hashCode());
+		
+		return hash;
+	}
+	
+	public String toString(){
+		String result = "Identifier: " + discountType + "\n" + super.toString();
+		result += "\nBuy " + buyQuantity + " Get " + getFreeQuantity;
+		
+		return result;
+	}
 }

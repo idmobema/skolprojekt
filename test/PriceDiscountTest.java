@@ -15,7 +15,7 @@ import org.junit.After;
 
 public class PriceDiscountTest {
 
-	PriceDiscount d1, d3;
+	Discount d1, d3;
 	TimeValidity tV;
 	@Before
 	public void setUp(){
@@ -32,7 +32,7 @@ public class PriceDiscountTest {
 	@Test
 	public void testGetPercentage() {
 		d3 = new PriceDiscount(12.34, 2015, 2, 15, 2015, 2, 20);
-		assertTrue("should return 12.34", d3.getPercentage() == 12.34);
+		assertTrue("should return 12.34", ((PriceDiscount) d3).getPercentage() == 12.34);
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
@@ -46,16 +46,16 @@ public class PriceDiscountTest {
 	public void testSetPercentage(){
 		double expected = 20.40;
 		d3 = new PriceDiscount(20.40, 2015, 2, 15, 2015, 2, 20);
-		d3.setPercentage(20.40);
+		((PriceDiscount) d3).setPercentage(20.40);
 		
-		assertTrue(expected == d3.getPercentage());
+		assertTrue(expected == ((PriceDiscount) d3).getPercentage());
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void testSetPercentageWithIllegalValues(){
 		d3 = new PriceDiscount(1, 2015, 2, 15, 2015, 2, 20);
 
-		d3.setPercentage(.99);
+		((PriceDiscount) d3).setPercentage(.99);
 	}
 	
 	@Test
@@ -86,6 +86,14 @@ public class PriceDiscountTest {
 		
 		assertEquals(expected, actual);
 		
+	}
+	
+	@Test
+	public void testEquals(){
+		d3 = new PriceDiscount(15, 2015, 2, 15, 2015, 2, 20);
+		d1 = new PriceDiscount(15, 2015, 2, 15, 2015, 2, 20);
+		
+		assertEquals(d3, d1);
 	}
 
 }

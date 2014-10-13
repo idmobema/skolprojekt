@@ -166,5 +166,13 @@ public class SpecialOfferTest {
 		assertTrue(expected && actual);
 	}
 	
+	@Test
+	public void testEquals(){
+		Discount sO1 = new SpecialOffer("TwoForThePriceOfOne", 2015, 4, 20, 2015, 4, 25);
+		Discount sO2 = new SpecialOffer("TwoForThePriceOfOne", 2015, 4, 20, 2015, 4, 25);
+		
+		assertEquals(sO1, sO2);
+	}
+	
 	
 }

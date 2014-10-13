@@ -33,12 +33,30 @@ public class PriceDiscount extends Discount{
 			this.percentage = percentage;
 	}
 	
-	public String toString(){
-		String result = DISCOUNT_TYPE + "\n" + super.toString();
-		result += "\nPercentage: " + percentage;
+	@Override
+	public boolean equals(Object obj){
+		if(!(obj instanceof PriceDiscount) || obj == null || !(((PriceDiscount) obj).getDiscountType().equals("Price Reduction")))
+			return false;
 		
-		return result;
+		PriceDiscount another = (PriceDiscount) obj;
+		boolean sameTimeValidity = this.getTimeValidity().equals(another.getTimeValidity());
+		boolean samePercentage = percentage == another.getPercentage();
+		
+		return sameTimeValidity && samePercentage;
 	}
+	
+	@Override
+	public int hashCode(){
+		int hash = 1;
+		
+		hash = hash * 7 + (int)(percentage * 10);
+		hash = hash * 13 + (DISCOUNT_TYPE == null ? 0 : DISCOUNT_TYPE.hashCode());
+		hash = hash * 19 + (getTimeValidity() == null ? 0 : getTimeValidity().hashCode());
+		
+		return hash;
+				
+	}
+	
 
 	@Override
 	public String getDiscountType() {
@@ -46,4 +64,11 @@ public class PriceDiscount extends Discount{
 		return DISCOUNT_TYPE;
 	}
 
+	
+	public String toString(){
+		String result = DISCOUNT_TYPE + "\n" + super.toString();
+		result += "\nPercentage: " + percentage;
+		
+		return result;
+	}
 }

@@ -24,7 +24,7 @@ import java.util.GregorianCalendar;
 public class TimeValidity implements Comparable<TimeValidity>{
 	
 
-	private GregorianCalendar startDate, endDate;
+	private Calendar startDate, endDate;
 	
 	
 	/** Constructor */
