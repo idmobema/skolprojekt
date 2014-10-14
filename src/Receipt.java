@@ -91,6 +91,17 @@ public class Receipt {
 		lines.add(str);
 	}
 	
+	// Motsvarande metod som tar priser i Money
+	public void addLine(int quantity, String itemName, Money itemPrice, Money subTotal) {
+		if (quantity <= 0 || quantity > MAX_QUANTITY)
+			throw new IllegalArgumentException("Invalid quantity: " + quantity + ". Value between 1 and " + MAX_QUANTITY + " required.");
+		itemName = checkItemName(itemName);
+		String str = formatLine(itemName, "" + subTotal.getAmount());
+		if (quantity > 1) // Om större kvantitet än 1, lägg till extrarad med prisuträkning
+			str += "  " + quantity + "st x " + itemPrice.getAmount() + "\n";
+		lines.add(str);
+	}
+	
 	// Lägger till rad med vägd vara
 	public void addLine(double weight, String itemName, double itemPrice, double subTotal) {
 		if (weight <= 0) 
@@ -99,6 +110,16 @@ public class Receipt {
 		checkPrices(itemPrice, subTotal);
 		String str = formatLine(itemName, formatPrice(subTotal));
 		str += "  " + weight + "kg x " + formatPrice(itemPrice) + "\n";
+		lines.add(str);
+	}
+	
+	// Motsvarande metod som tar priser i Money
+	public void addLine(double weight, String itemName, Money itemPrice, Money subTotal) {
+		if (weight <= 0) 
+			throw new IllegalArgumentException("Invalid weight: " + weight + ". Value must be positive.");
+		itemName = checkItemName(itemName);
+		String str = formatLine(itemName, "" + subTotal.getAmount());
+		str += "  " + weight + "kg x " + itemPrice.getAmount() + "\n";
 		lines.add(str);
 	}
 	
@@ -141,10 +162,9 @@ public class Receipt {
 	
 	// Skapar avsnitt med totalpriset
 	public void createTotal() {
-		String priceString = formatPrice(sale.getTotal());
+		String priceString = "" + sale.getTotal().getAmount();
 		total += makeSpace(LINE_WIDTH - 10) + "==========\n";
 		total += formatLine("TOTALT ATT BETALA", priceString);
-		//total += makeSpace(LINE_WIDTH - priceString.length()) + priceString + "\n";
 	}
 	
 	@Override

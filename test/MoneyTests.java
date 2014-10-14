@@ -95,6 +95,12 @@ public class MoneyTests {
 		assertEquals(zero, five.times(0));
 	}
 
+	@Test
+	public void testMultiplicationWithDouble() {
+		Money result = ten.times(0.7894);
+		assertEquals(new BigDecimal("7.89"), result.getAmount());
+	}
+	
 	@Test(expected = IllegalArgumentException.class)
 	public void testInvalidMultiplier() {
 		five.times(-1);

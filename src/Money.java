@@ -77,9 +77,20 @@ public class Money implements Comparable<Money> {
 	
 	// Obs att times inte förändrar det befintliga objektet, utan returnerar ett nytt objekt
 	public Money times(int multiplier) {
-		if (multiplier < 0)
-			throw new IllegalArgumentException("Invalid multiplier: " + multiplier + ". Value must be zero or positive.");
+		checkMultiplier(multiplier);
 		return new Money(amount * multiplier, "SEK");
+	}
+	
+	// Överlagrad times-metod för multiplikation med double, t ex en vikt
+	public Money times(double multiplier) {
+		checkMultiplier(multiplier);
+		return new Money(Math.round(amount * multiplier), "SEK");
+	}
+	
+	// Hjälpmetod för kontroll av multiplikand
+	private void checkMultiplier(double multiplier) {
+		if (multiplier < 0)
+			throw new IllegalArgumentException("Invalid multiplier. Value must be zero or positive.");		
 	}
 	
 	@Override

@@ -134,7 +134,7 @@ public class ReceiptTests {
 	@Test
 	public void testIfReceiptContainsTotal() {
 		r1.createTotal();
-		assertTrue(r1.toString().contains("" + sale.getTotal()));
+		assertTrue(r1.toString().contains("" + sale.getTotal().getAmount()));
 	}
 	
 	@Test
@@ -168,5 +168,20 @@ public class ReceiptTests {
 		String receiptLine = r1.formatLine(item1, subTotal);
 		assertEquals(receiptLine.length(), 41);
 		assertEquals(subTotal, receiptLine.substring(35, 40));
+	}
+	
+	@Test
+	public void testAddLineWithMoneyPrices() {
+		r1.addLine(2, item1, new Money(19.9, "SEK"), new Money(39.8, "SEK"));
+		assertTrue(r1.toString().length() > r2.toString().length());
+		assertTrue(r1.toString().contains(item1));		
+	}
+
+	@Test
+	public void testOtherAddLineWithMoneyPrices() {
+		r1.addLine(0.757, item2, new Money(24.9, "SEK"), new Money(18.85, "SEK"));
+		assertTrue(r1.toString().length() > r2.toString().length());
+		assertTrue(r1.toString().contains(item2));
+		assertTrue(r1.toString().contains("0.757kg"));
 	}
 }

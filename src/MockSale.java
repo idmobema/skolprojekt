@@ -12,7 +12,7 @@ public class MockSale {
 		return "Roger";
 	}
 	
-	public double getTotal() {
-		return 606.56;
+	public Money getTotal() {
+		return Money.getCrowns(606.56);
 	}
 }
