@@ -75,22 +75,12 @@ public class Money implements Comparable<Money> {
 			throw new IllegalArgumentException("Invalid argument. Money in different currencies can not be added, subtracted or compared.");
 	}
 	
+	// Metod för multiplikation med t ex antal eller vikt
 	// Obs att times inte förändrar det befintliga objektet, utan returnerar ett nytt objekt
-	public Money times(int multiplier) {
-		checkMultiplier(multiplier);
-		return new Money(amount * multiplier, "SEK");
-	}
-	
-	// Överlagrad times-metod för multiplikation med double, t ex en vikt
 	public Money times(double multiplier) {
-		checkMultiplier(multiplier);
-		return new Money(Math.round(amount * multiplier), "SEK");
-	}
-	
-	// Hjälpmetod för kontroll av multiplikand
-	private void checkMultiplier(double multiplier) {
 		if (multiplier < 0)
 			throw new IllegalArgumentException("Invalid multiplier. Value must be zero or positive.");		
+		return new Money(Math.round(amount * multiplier), "SEK");
 	}
 	
 	@Override
@@ -102,10 +92,9 @@ public class Money implements Comparable<Money> {
 		return false;	
 	}
 
-	// Ful-implementation som bör ändras vid tillfälle
 	@Override
 	public int hashCode() {
-		return (int) amount + 1337;
+		return (int) amount + currency.hashCode();
 	}
 	
 	public int compareTo(Money other) {
