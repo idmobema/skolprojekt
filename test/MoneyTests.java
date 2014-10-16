@@ -84,8 +84,14 @@ public class MoneyTests {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testInvalidCurrencyName() {
+	public void testInvalidCurrencyCode() {
 		new Money(200, "SE");
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testCurrencyCodeSetToNull() {
+		String currencyCode = null;
+		new Money(200, currencyCode);
 	}
 
 	@Test
@@ -141,5 +147,13 @@ public class MoneyTests {
 	@Test(expected = IllegalArgumentException.class)
 	public void testComparisonWithDifferentCurrencies() {
 		five.compareTo(dollar);
+	}
+	
+	@Test
+	public void testRoundingAfterMultiplication() {
+		Money result = ten.times(1.4956);
+		assertEquals(new BigDecimal("14.96"), result.getAmount());
+		result = ten.times(1.494492);
+		assertEquals(new BigDecimal("14.94"), result.getAmount());
 	}
 }

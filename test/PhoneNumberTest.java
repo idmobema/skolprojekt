@@ -3,6 +3,10 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 
+//de riktnummer som inte finns?
+//mobilnummer alltid sju siffror i number?
+//Får number börja med 0?
+
 public class PhoneNumberTest {
 
 	@Test
@@ -43,6 +47,11 @@ public class PhoneNumberTest {
 		PhoneNumber nbr = new PhoneNumber("170", "1122334");
 	}
 	
+	@Test(expected = IllegalArgumentException.class)
+	public void testTwoLeadingZerosInAreaCode(){
+		PhoneNumber nbr = new PhoneNumber("008", "123456");
+	}
+	
 	@Test
 	public void testThatNbrIsSaved(){
 		PhoneNumber nbr = new PhoneNumber("08", "9988776");
@@ -74,6 +83,11 @@ public class PhoneNumberTest {
 	@Test(expected = NumberFormatException.class)
 	public void testNotNumericalNbr(){
 		PhoneNumber nbr = new PhoneNumber("08", "1a2233");
+	}
+	
+	@Test(expected = NumberFormatException.class)
+	public void testNegativeNbr(){
+		PhoneNumber nbr = new PhoneNumber("0911", "-12344");
 	}
 	
 	@Test
