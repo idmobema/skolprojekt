@@ -13,14 +13,14 @@ public class PricedPerPieceTester {
 	}
 	@Test
 	public void testPricedPerPieceConstructorWithValidArgs() {
-		Item item = new PricedPerPiece("Mej12ARL051", 10.50);
+		Item item = new PricedPerPiece("Name", "Mej12ARL051", 10.50);
 		assertNotNull(item);
 	}
 	
 	@Test
 	public void testPricedPerPieceConstructorWithInvalidItemID(){
 		try{
-			item = new PricedPerPiece("", 11.25);
+			item = new PricedPerPiece("Name", "", 11.25);
 		}
 		catch(IllegalArgumentException iAE){
 			assertNull("object should not 've been created", item);
@@ -29,23 +29,23 @@ public class PricedPerPieceTester {
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void testPricedPerPieceConstructorWithInvalidItemID2(){
-		item = new PricedPerPiece("  trew12345", 11.25);
+		item = new PricedPerPiece("Name", "  trew12345", 11.25);
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void testPricedPerPieceConstructorWithInvalidUnitPrice1(){
-		item = new PricedPerPiece("Fis33ABB107", -1.3);
+		item = new PricedPerPiece("Name", "Fis33ABB107", -1.3);
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void testPricedPerPieceConstructorWithInvalidUnitPrice2(){
-		item = new PricedPerPiece("Fis33ABB107", 0);
+		item = new PricedPerPiece("Name", "Fis33ABB107", 0);
 	}
 	
 	@Test
 	public void testGetID(){
-		item = new PricedPerPiece("Brö10PÅG014", 21.45);
-		String expected = "Brö10PÅG014";
+		item = new PricedPerPiece("Name", "12345678909", 21.45);
+		String expected = "12345678909";
 		String actual = item.getID();
 		
 		assertEquals(expected, actual);
@@ -53,7 +53,7 @@ public class PricedPerPieceTester {
 	
 	@Test
 	public void testGetUnitPriceWithoutSpecialOfferSet(){
-		item = new PricedPerPiece("Kaf08NES002", 58.60);
+		item = new PricedPerPiece("Name", "Kaf08NES002", 58.60);
 		double expected = 58.60;
 		double actual = item.getUnitPrice();
 		
@@ -62,7 +62,7 @@ public class PricedPerPieceTester {
 	
 	@Test
 	public void testSetUnitPriceWithValidArgs(){
-		item = new PricedPerPiece("Ket50FEL021", 22.40);
+		item = new PricedPerPiece("Name", "Ket50FEL021", 22.40);
 		item.setUnitPrice(21.05);
 		
 		double expected = 21.05;
@@ -73,20 +73,20 @@ public class PricedPerPieceTester {
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void testSetUnitPriceWithInvalidArgs(){
-		item = new PricedPerPiece("Ket50FEL021", 22.40);
+		item = new PricedPerPiece("Name", "Ket50FEL021", 22.40);
 		item.setUnitPrice(-6);
 	}
 	
 	@Test
 	public void testGetDiscount(){
-		item = new PricedPerPiece("Tob28PRI006", 54.00);
+		item = new PricedPerPiece("Name", "Tob28PRI006", 54.00);
 
 		assertNull(item.getDiscount());
 	}
 	
 	@Test
 	public void testSetSpecialOfferDiscountWithValidArgs(){
-		item = new PricedPerPiece("God66MAR014", 19.75);
+		item = new PricedPerPiece("Name", "God66MAR014", 19.75);
 		item.setSpecialOfferDiscount("2ForThePriceOf1", 2015, 2, 15, 2015, 2, 20);
 		
 		Discount expected = new SpecialOffer("2ForThePriceOf1", 2015, 2, 15, 2015, 2, 20);
@@ -97,7 +97,7 @@ public class PricedPerPieceTester {
 	
 	@Test
 	public void testGetSpecialOfferDiscount(){
-		item = new PricedPerPiece("Kor20GÄV058", 59.49);
+		item = new PricedPerPiece("Name", "12345678901", 59.49);
 		item.setSpecialOfferDiscount("2ForThePriceOf1", 2015, 2, 15, 2015, 2, 20);
 		
 		Discount expected = new SpecialOffer("2ForThePriceOf1", 2015, 2, 15, 2015, 2, 20);
@@ -108,7 +108,7 @@ public class PricedPerPieceTester {
 	
 	@Test
 	public void testGetBuyQuantity(){
-		item = new PricedPerPiece("Gla10GBA065", 35.30);
+		item = new PricedPerPiece("Name", "Gla10GBA065", 35.30);
 		item.setSpecialOfferDiscount("2ForThePriceOf1", 2015, 2, 15, 2015, 2, 20);
 		((SpecialOffer) item.getDiscount()).setBuyQuantity(3);
 		int expected = 3;
@@ -119,7 +119,7 @@ public class PricedPerPieceTester {
 	
 	@Test
 	public void testGetGetFreeQuantity(){
-		item = new PricedPerPiece("Gla10GBA065", 35.30);
+		item = new PricedPerPiece("Name", "Gla10GBA065", 35.30);
 		item.setSpecialOfferDiscount("5ForThePriceOf3", 2015, 2, 15, 2015, 2, 20);
 		((SpecialOffer) item.getDiscount()).setBuyQuantity(3);
 		((SpecialOffer) item.getDiscount()).setGetFreeQuantity(5);
@@ -134,7 +134,7 @@ public class PricedPerPieceTester {
 	
 	@Test
 	public void testGetUnitPriceWithSpecialOfferSet(){
-		item = new PricedPerPiece("Gla10GBA065", 35.30);
+		item = new PricedPerPiece("Name", "Gla10GBA065", 35.30);
 		item.setSpecialOfferDiscount("2ForThePriceOf1", 2015, 2, 15, 2015, 2, 20);
 		((SpecialOffer) item.getDiscount()).setBuyQuantity(1);
 		((SpecialOffer) item.getDiscount()).setGetFreeQuantity(1);
@@ -147,7 +147,7 @@ public class PricedPerPieceTester {
 	
 	@Test
 	public void testGetUnitPriceWithPriceDiscountSet(){
-		item = new PricedPerPiece("Äpp21DRI014", 50.0);
+		item = new PricedPerPiece("Name", "12345678901", 50.0);
 		item.setPriceDiscount(10.0, 2015, 2, 15, 2015, 2, 20);
 
 		double expected = 45.0;
@@ -158,9 +158,9 @@ public class PricedPerPieceTester {
 	
 	@Test
 	public void testEquals(){
-		Item item1 = new PricedPerPiece("Kor20GÄV058", 59.49);
+		Item item1 = new PricedPerPiece("Name", "12345678901", 59.49);
 		item1.setSpecialOfferDiscount("2ForThePriceOf1", 2015, 2, 15, 2015, 2, 20);
-		Item item2 = new PricedPerPiece("Kor20GÄV058", 59.49);
+		Item item2 = new PricedPerPiece("Name", "12345678901", 59.49);
 		item2.setSpecialOfferDiscount("2ForThePriceOf1", 2015, 2, 15, 2015, 2, 20);
 		
 		assertEquals(item1, item2);
@@ -168,7 +168,7 @@ public class PricedPerPieceTester {
 	
 	@Test
 	public void testToString(){
-		item = new PricedPerPiece("Äpp21DRI014", 50.0);
+		item = new PricedPerPiece("Name", "12345678901", 50.0);
 		item.setPriceDiscount(15.0, 2015, 2, 15, 2015, 2, 20);
 		
 		String expected = "Item ID: " + item.getID();
