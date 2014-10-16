@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Test;
 
 
-public class SpecialOfferTest {
+public class SpecialOfferTester {
 
 	SpecialOffer sO;
 	
@@ -61,7 +61,6 @@ public class SpecialOfferTest {
 		}
 		catch(IllegalArgumentException iAE){
 			assertNull("obj should not have been created", sO);
-			System.out.println("Peekin' Tom says: " + sO);
 		}
 		
 	}
@@ -112,7 +111,7 @@ public class SpecialOfferTest {
 			sO.setGetFreeQuantity(3);
 		}
 		catch(IllegalStateException iSE){
-			System.out.println(iSE.getMessage());
+			assertFalse(sO.isOfferActive());
 		}
 	}
 	
@@ -128,9 +127,9 @@ public class SpecialOfferTest {
 		sO = new SpecialOffer("TwoForThePriceOfOne", 2015, 4, 20, 2015, 4, 25);
 		sO.setBuyQuantity(1);
 		sO.setGetFreeQuantity(2);
-		String expected = "Identifier: TwoForThePriceOfOne\nValid through:\n";
+		String expected = "Identifier TwoForThePriceOfOne\nValid through:\n";
 		expected += "Start date: 20/4/2015\nEnd date: 25/4/2015";
-		expected += "\nBuy 1 Get 2";
+		expected += "\nStatus: active\nBuy 1 Get 2";
 		String actual = sO.toString();
 		
 		assertEquals(expected, actual);

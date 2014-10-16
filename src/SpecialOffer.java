@@ -84,7 +84,7 @@ public class SpecialOffer extends Discount{
 		SpecialOffer another = (SpecialOffer) obj;
 		boolean sameBuyQuantity = buyQuantity == another.getBuyQuantity();
 		boolean sameGetFreeQuantity = getFreeQuantity == another.getGetFreeQuantity();
-		boolean sameDiscountType = offerName.equals(another.getOfferName());
+		boolean sameDiscountType = offerName.equals(another.getOfferName()); // ?Business rule: Does the offerName has to be the same in order to consider two SpecialOffers equals?
 		boolean sameTimeValidity = this.getTimeValidity().equals(another.getTimeValidity());
 		
 		return sameDiscountType && sameBuyQuantity && sameGetFreeQuantity && sameTimeValidity;
@@ -103,8 +103,10 @@ public class SpecialOffer extends Discount{
 	}
 	
 	public String toString(){
-		String result = "Identifier: " + offerName + "\n" + super.toString();
-		result += "\nBuy " + buyQuantity + " Get " + getFreeQuantity;
+		String result = "Identifier " + offerName + "\n" + super.toString();
+		result += "\nStatus: " + (isOfferActive() ? "active" : "inactive");
+		if(isOfferActive())
+			result += "\nBuy " + buyQuantity + " Get " + getFreeQuantity;
 		
 		return result;
 	}

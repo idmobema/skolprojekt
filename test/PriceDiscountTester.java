@@ -13,9 +13,9 @@ import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 
-public class DiscountTester {
+public class PriceDiscountTester {
 
-	Discount d1, d2, d3;
+	Discount d1, d3;
 	TimeValidity tV;
 	@Before
 	public void setUp(){
@@ -26,7 +26,6 @@ public class DiscountTester {
 	@After
 	public void tearDown(){
 		d1 = null;
-		d2 = null;
 		d3 = null;
 	}
 	
@@ -72,8 +71,7 @@ public class DiscountTester {
 	@Test
 	public void testToString(){
 		d3 = new PriceDiscount(1, 2015, 2, 15, 2015, 2, 20);
-		String expected = "Price Reduction\nValid through:\n" + tV;
-		expected += "\nPercentage: 1.0";
+		String expected = d3.getOfferName() + "\nValid through:\n" + tV + "\nPercentage: 1.0";
 		String actual = d3.toString();
 		
 		assertEquals(expected, actual);
@@ -91,27 +89,11 @@ public class DiscountTester {
 	}
 	
 	@Test
-	public void testEquals() {
-		d1 = new SpecialOffer("2for1", 2015, 2, 15, 2015, 2, 20);
-		d2 = new SpecialOffer("2for1", 2015, 2, 15, 2015, 2, 20);
+	public void testEquals(){
+		d3 = new PriceDiscount(15, 2015, 2, 15, 2015, 2, 20);
+		d1 = new PriceDiscount(15, 2015, 2, 15, 2015, 2, 20);
 		
-		assertEquals(d1, d2);
-	}
-	
-	@Test
-	public void testEquals2(){
-		d1 = new SpecialOffer("2for1", 2015, 2, 15, 2015, 2, 20);
-		d2 = new PriceDiscount(1, 2015, 2, 15, 2015, 2, 20);
-		
-		assertNotEquals(d1, d2);
-	}
-	
-	@Test
-	public void testEquals3(){
-		d1 = new SpecialOffer("2for1", 2015, 2, 15, 2015, 2, 20);
-		d2 = new SpecialOffer("3for1", 2015, 2, 15, 2015, 2, 20);
-		
-		assertNotEquals(d1, d2);
+		assertEquals(d3, d1);
 	}
 
 }
