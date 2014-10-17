@@ -15,13 +15,13 @@ public class Receipt {
 	public static final int MAX_NAME_LENGTH = 20;
 	public static final int LINE_WIDTH = 40;
 	
-	private MockSale sale;
+	private Sale sale;
 	private String saleInfo = "";
 	private String total = "";
 	private int receiptNo;
 	private List<String> lines = new ArrayList<>();
 	
-	public Receipt(MockSale ms) {
+	public Receipt(Sale ms) {
 		sale = ms;
 		numberOfReceipts++;
 		receiptNo = numberOfReceipts;
@@ -69,26 +69,15 @@ public class Receipt {
 	}
 	
 	// Skapar avsnitt med information om försäljningstillfället
-	public void createSaleInfo() {
+	public String createSaleInfo() {
 		saleInfo = "Kvittonr: " + receiptNo + "\n";
 		saleInfo += "Kassör: " + sale.getCashier() + "\n";
 		saleInfo += sale.getDate() + " " + sale.getTime() + "\n";
+		return saleInfo;
 	}
 	
 	public int getReceiptNo() {
 		return receiptNo;
-	}
-	
-	// Lägger till rad med styckvara
-	public void addLine(int quantity, String itemName, double itemPrice, double subTotal) {
-		if (quantity <= 0 || quantity > MAX_QUANTITY)
-			throw new IllegalArgumentException("Invalid quantity: " + quantity + ". Value between 1 and " + MAX_QUANTITY + " required.");
-		itemName = checkItemName(itemName);
-		checkPrices(itemPrice, subTotal);
-		String str = formatLine(itemName, formatPrice(subTotal));
-		if (quantity > 1) // Om större kvantitet än 1, lägg till extrarad med prisuträkning
-			str += "  " + quantity + "st x " + formatPrice(itemPrice) + "\n";
-		lines.add(str);
 	}
 	
 	// Motsvarande metod som tar priser i Money
@@ -124,7 +113,7 @@ public class Receipt {
 	}
 	
 	// Hjälpmetod för att kontrollera och eventuellt formatera varunamnet
-	private String checkItemName(String itemName) {
+	static String checkItemName(String itemName) {
 		if (itemName.length() < MIN_NAME_LENGTH)
 			throw new IllegalArgumentException("Invalid item name. Minimum " + MIN_NAME_LENGTH + " characters required.");
 		if (itemName.length() > MAX_NAME_LENGTH)
@@ -133,7 +122,7 @@ public class Receipt {
 	}
 	
 	// Hjälpmetod för att kontrollera styck- och totalpriser
-	private void checkPrices(double itemPrice, double subTotal) {
+	static void checkPrices(double itemPrice, double subTotal) {
 		if (itemPrice <= 0) 
 			throw new IllegalArgumentException("Invalid item price: " + itemPrice + ". Price must not be negative.");
 		if (subTotal <= 0) 
@@ -141,12 +130,12 @@ public class Receipt {
 	}
 	
 	// Hjälpmetod för att formatera pris
-	private String formatPrice(double price) {
+	static String formatPrice(double price) {
 		return String.format(Locale.US, "%.2f", price);
 	}
 	
 	// Hjälpmetod för att formatera kvittorad, protected för att underlätta testning
-	protected String formatLine(String first, String second) {
+	protected static String formatLine(String first, String second) {
 		int numberOfSpaces = LINE_WIDTH - first.length() - second.length();		
 		return first + makeSpace(numberOfSpaces) + second + "\n";
 	}
@@ -161,10 +150,11 @@ public class Receipt {
 	}
 	
 	// Skapar avsnitt med totalpriset
-	public void createTotal() {
-		String priceString = "" + sale.getTotal().getAmount();
+	public String createTotal() {
+		String priceString = "" + sale.getTotal();
 		total += makeSpace(LINE_WIDTH - 10) + "==========\n";
 		total += formatLine("TOTALT ATT BETALA", priceString);
+		return total;
 	}
 	
 	@Override
@@ -172,11 +162,13 @@ public class Receipt {
 		String str = "";
 		str += header;
 		str += delimiter;
-		str += saleInfo;
+		str += createSaleInfo();
 		str += delimiter;
+		for (SaleLineItem sli : sale)
+			str += sli.toString();
 		for (String line : lines)
 			str += line;
-		str += total;
+		str += createTotal();
 		str += delimiter;
 		str += footer;
 		return str;
