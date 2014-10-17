@@ -41,7 +41,7 @@ public abstract class Item implements Comparable<Item>{
 	
 	protected Item(String unitId, double unitPrice){
 		checkParametersValidity(unitId, unitPrice);
-		this.itemId = unitId;
+		this.unitId = unitId;
 		this.unitPrice = new Money(unitPrice, "SEK");
 	}
 	
@@ -50,10 +50,8 @@ public abstract class Item implements Comparable<Item>{
 		checkPrice(unitPrice);
 	}
 
-	
-	
 	private void checkID(String id) {
-		if(id.length() != 11 || !id.matches("^[\\w]+"))
+		if(id.length() != 11 || !id.matches("[A-ZĹÄÖÜa-zĺäöü0-9]+") )
 			throw new IllegalArgumentException("id has to be 11 alpha-numerical chars long");
 	}
 
@@ -63,7 +61,7 @@ public abstract class Item implements Comparable<Item>{
 	}
 	
 	public String getID(){
-		return itemId;
+		return unitId;
 	}
 	
 	public Discount getDiscount() {
@@ -144,9 +142,8 @@ public abstract class Item implements Comparable<Item>{
 	}
 
 
-	@Override
 	public String toString(){
-		String result = "Item ID: " + itemId;
+		String result = "Item ID: " + unitId;
 		result += "\nDiscount: " + (discount == null ? "None" : discount);
 		result += "\nUnit Price: " + unitPrice;
 		result += "\nReduced Price: " + (reducedPrice == null ? "none" : reducedPrice);
@@ -163,7 +160,7 @@ public abstract class Item implements Comparable<Item>{
 				+ ((discount == null) ? 0 : discount.hashCode());
 		result = prime * result
 				+ ((reducedPrice == null) ? 0 : reducedPrice.hashCode());
-		result = prime * result + ((itemId == null) ? 0 : itemId.hashCode());
+		result = prime * result + ((unitId == null) ? 0 : unitId.hashCode());
 		result = prime * result
 				+ ((unitPrice == null) ? 0 : unitPrice.hashCode());
 		return result;
@@ -195,11 +192,11 @@ public abstract class Item implements Comparable<Item>{
 		} else if (!reducedPrice.equals(other.reducedPrice)) {
 			return false;
 		}
-		if (itemId == null) {
-			if (other.itemId != null) {
+		if (unitId == null) {
+			if (other.unitId != null) {
 				return false;
 			}
-		} else if (!itemId.equals(other.itemId)) {
+		} else if (!unitId.equals(other.unitId)) {
 			return false;
 		}
 		if (unitPrice == null) {
@@ -211,4 +208,6 @@ public abstract class Item implements Comparable<Item>{
 		}
 		return true;
 	}
+	
+	
 }

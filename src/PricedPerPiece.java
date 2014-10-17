@@ -32,9 +32,8 @@
 
 public class PricedPerPiece extends Item {
 	
-	public PricedPerPiece(String name, String unitID, double price){
-		super(name, unitID, price);
-
+	public PricedPerPiece(String unitID, double unitPrice){
+		super(unitID, unitPrice);
 		
 	}
 	
