@@ -15,14 +15,14 @@ public class PricedPerWeightTester {
 	
 	@Test
 	public void testPricedPerWeightConstructor() {
-		 pPW = new PricedPerWeight("Äpp45TIR004", 134.5, "grams");
+		 pPW = new PricedPerWeight("App45TIR004", 134.5, "grams");
 		assertNotNull(pPW);
 	}
 	
 	@Test
 	public void testPricedPerWeightConstWithIllegalArgs(){
 		try{
-			pPW = new PricedPerWeight("Jäs85KRO014", 45, "");
+			pPW = new PricedPerWeight("JAs85KRO014", 45, "");
 		}
 		catch(IllegalArgumentException iAE){
 			assertNull(pPW);
@@ -31,7 +31,7 @@ public class PricedPerWeightTester {
 	
 	@Test
 	public void testGetMeasureUnit(){
-		pPW = new PricedPerWeight("Äpp45TIR004", 134.5, "kilo");
+		pPW = new PricedPerWeight("App45TIR004", 134.5, "kilo");
 		String expected = "kilo";
 		String actual = ((PricedPerWeight) pPW).getMeasureUnit();
 		
@@ -40,7 +40,7 @@ public class PricedPerWeightTester {
 	
 	@Test
 	public void testSetMeasureUnit(){
-		pPW = new PricedPerWeight("Äpp45TIR004", 134.5, "kilo");
+		pPW = new PricedPerWeight("App45TIR004", 134.5, "kilo");
 		((PricedPerWeight) pPW).setMeasureUnit("hk");
 		
 		String expected = "hk";
@@ -51,7 +51,7 @@ public class PricedPerWeightTester {
 
 	@Test
 	public void testSetPriceDiscount(){
-		pPW = new PricedPerWeight("Äpp45TIR004", 21, "kilo");
+		pPW = new PricedPerWeight("App45TIR004", 21, "kilo");
 		pPW.setPriceDiscount(10, 2015, 2, 15, 2015, 2, 20);
 		
 		Money expected = new Money(18.90, "SEK");
@@ -62,7 +62,7 @@ public class PricedPerWeightTester {
 	
 	@Test
 	public void testGetDiscount(){
-		pPW = new PricedPerWeight("Äpp45TIR004", 21, "kilo");
+		pPW = new PricedPerWeight("App45TIR004", 21, "kilo");
 		pPW.setPriceDiscount(10, 2015, 2, 15, 2015, 2, 20);
 		
 		Discount expected = new PriceDiscount(10, 2015, 2, 15, 2015, 2, 20);
@@ -74,7 +74,7 @@ public class PricedPerWeightTester {
 	@Test (expected = IllegalArgumentException.class)
 	public void testSetDiscountWithSpecialOfferType(){
 
-		pPW = new PricedPerWeight("Äpp45TIR004", 21, "kilo");
+		pPW = new PricedPerWeight("App45TIR004", 21, "kilo");
 		Discount discount = new SpecialOffer("Buy3Get5", 2015, 2, 15, 2015, 2, 20);
 		pPW.setDiscount(discount);
 
@@ -83,8 +83,8 @@ public class PricedPerWeightTester {
 	
 	@Test
 	public void testToString(){
-		pPW = new PricedPerWeight("Äpp45TIR004", 21, "kilo");
-		String expected = "Item ID: Äpp45TIR004" + "\nDiscount: None\n";
+		pPW = new PricedPerWeight("App45TIR004", 21, "kilo");
+		String expected = "Item ID: App45TIR004" + "\nDiscount: None\n";
 		expected += "Unit Price: 21.00 SEK\nReduced Price: none";
 		String actual = pPW.toString();
 		

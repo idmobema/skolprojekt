@@ -10,7 +10,7 @@ public class PricedPerWeight extends Item{
 	}
 
 	private void checkMeasureUnit(String measureUnit) {
-		if(measureUnit.length() < 1 || ! measureUnit.substring(0, 1).matches("[A-Z����a-z����]+"))
+		if(measureUnit.length() < 1 || ! measureUnit.substring(0, 1).matches("[A-ZĹÄÖÜa-zĺäöü0-9]+"))
 			throw new IllegalArgumentException("Wrong measure unit.");
 	}
 	
@@ -28,13 +28,6 @@ public class PricedPerWeight extends Item{
 		if(discount instanceof SpecialOffer)
 			throw new IllegalArgumentException("this type of product cannot have the SpecialOffer type of discount");
 		super.setDiscount(discount);
-	}
-
-	@Override
-	public void setSpecialOfferDiscount(String discountType, int startYear,
-			int startMonth, int startDay, int endYear, int endMonth, int endDay) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 }

@@ -16,11 +16,15 @@ public class SaleLineItem {
 	}
 	
 	public String getItemName() {
-		return item.getName();
+		return item.getItemDesc().getName();
 	}
 	
-	public double getSubTotal() {
-		return item.getPrice()*quantity;
+	public Money getSubTotal() {
+		Money subtotal = new Money(0,"SEK");
+		for(int i = 0 ; i<quantity; ++i) {
+			subtotal = subtotal.plus(item.getUnitPrice());
+		}
+		return subtotal;
 	}
 	
 	public String toString() {
@@ -28,11 +32,11 @@ public class SaleLineItem {
 		 
 		if (quantity <= 0 || quantity > Receipt.MAX_QUANTITY)
 			throw new IllegalArgumentException("Invalid quantity: " + quantity + ". Value between 1 and " + Receipt.MAX_QUANTITY + " required.");
-		String itemName = Receipt.checkItemName(item.getName());
-		Receipt.checkPrices(item.getPrice(), getSubTotal());
-		String str = Receipt.formatLine(itemName, Receipt.formatPrice(getSubTotal()));
+		String itemName = Receipt.checkItemName(item.getItemDesc().getName());
+		Receipt.checkPrices(item.getUnitPrice().getAmount().doubleValue(), getSubTotal().getAmount().doubleValue());
+		String str = Receipt.formatLine(itemName, getSubTotal().toString());
 		if (quantity > 1) // Om större kvantitet än 1, lägg till extrarad med prisuträkning
-			str += "  " + quantity + "st x " + Receipt.formatPrice(item.getPrice()) + "\n";
+			str += "  " + quantity + "st x " + item.getUnitPrice() + "\n";
 		return str;		
 			
 	}

@@ -15,7 +15,7 @@ public class SaleTest {
 	@Test
 	public void testAdd() {
 		Sale sale = new Sale();
-		Item kexchoklad = new PricedPerPiece("Kexchoklad", "12345678902", 7);
+		Item kexchoklad = new Item(new ItemDescription("Kexchoklad", "", new Money(700, "SEK"), "12345678902"));;
 		sale.add(kexchoklad);
 		for(SaleLineItem i : sale) {
 			assertEquals(i.getItemName(), "Kexchoklad");
@@ -47,11 +47,11 @@ public class SaleTest {
 	@Test
 	public void testGetTotal() {
 		Sale sale = new Sale();
-		Item kexchoklad = new PricedPerPiece("Kexchoklad", "12345678902", 7);
+		Item kexchoklad = new Item(new ItemDescription("Kexchoklad", "", new Money(700, "SEK"), "12345678902"));
 		sale.add(kexchoklad);
-		Item darjeling = new PricedPerPiece("Darjeling", "12345678904", 45);
+		Item darjeling = new Item(new ItemDescription("Darjeling", "", new Money(4500, "SEK"), "12345678903"));
 		sale.add(darjeling);
-		assertEquals(52, sale.getTotal(), 0.1);
+		assertEquals(new Money(5200, "SEK"), sale.getTotal());
 	}
 	
 	@Test

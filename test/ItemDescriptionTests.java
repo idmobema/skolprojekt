@@ -11,12 +11,12 @@ public class ItemDescriptionTests {
 	
 	@Before
 	public void setUp() throws Exception {
-		id = new ItemDescription("Gurka","En grön grönsak", 15.50, "314");
+		id = new ItemDescription("Gurka","En grön grönsak", new Money(1550, "SEK"), "314");
 	}
 
 	@Test
 	public void testGetPrice() {
-		assertEquals(15.50, id.getPrice(), 0);
+		assertEquals(new Money(1550, "SEK"), id.getPrice());
 	}
 	
 	@Test

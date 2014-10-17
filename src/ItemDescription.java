@@ -1,23 +1,22 @@
 public class ItemDescription {
-	private double price;
 	private String name;
 	private String description;
 	private String itemId;
+	private Money price;
 	
-	public ItemDescription(String name, String description, double price, String itemId) {
+	public ItemDescription(String name, String description, Money price, String itemId) {
 		this.price = price;
 		this.name = name;
 		this.description = description;
 		this.itemId = itemId;
-		
-		
+	
 	}
 	
 	public String getName() {
 		return name;
 	}
 	
-	public double getPrice() {
+	public Money getPrice() {
 		return price;
 	}
 	

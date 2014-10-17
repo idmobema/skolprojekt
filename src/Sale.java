@@ -33,11 +33,11 @@ public class Sale implements Iterable<SaleLineItem> {
 		return timeFormat.format(date);
 		
 	}
-	//double for now
-	public double getTotal() {
-		double currentTotal = 0;
+	
+	public Money getTotal() {
+		Money currentTotal = new Money(0, "SEK");
 		for(SaleLineItem sli: this) {
-			currentTotal += sli.getSubTotal();
+			currentTotal = currentTotal.plus(sli.getSubTotal());
 		}
 		return currentTotal;
 	}

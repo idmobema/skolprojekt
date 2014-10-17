@@ -15,8 +15,9 @@ public class Item implements Comparable<Item>{
 		this.unitPrice = new Money(unitPrice, "SEK");
 	}
 	
-	Item(String unitId, double unitPrice, ItemDescription itemDesc) {
-		this(unitId, unitPrice);
+	Item(ItemDescription itemDesc) {
+		this.unitId = itemDesc.getItemId();
+		this.unitPrice = itemDesc.getPrice();
 		this.itemDesc = itemDesc;
 	}
 	
@@ -26,7 +27,7 @@ public class Item implements Comparable<Item>{
 	}
 
 	private void checkID(String id) {
-		if(id.length() != 11 || !id.matches("[A-ZĹÄÖÜa-zĺäöü0-9]+") )
+		if(id.length() != 11 || !id.matches("[A-ZÅÄÖÜa-zåäöü0-9]+") )
 			throw new IllegalArgumentException("id has to be 11 alpha-numerical chars long");
 	}
 
