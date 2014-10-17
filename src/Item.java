@@ -2,47 +2,22 @@ import java.math.BigDecimal;
 
 
 public abstract class Item implements Comparable<Item>{
-	double price;
-	String name;
-	String itemId;
-	
-	public Item(String name, String itemId, double price) {
-		this.price = price;
-		this.name = name;
-		this.itemId = itemId;
-		this.setUnitPrice(price);
-	}
-	
-	public String getName() {
-		return name;
-	}
-	
-	public double getPrice() {
-		return price;
-	}
-	
-	public String getItemId() {
-		return itemId;
-	}
-	
-	
-	@Override
-	public int compareTo(Item other) {
-		return other.itemId.compareTo(itemId);
-	}
-	
-
-	abstract public void setSpecialOfferDiscount(String discountType, int startYear, int startMonth, int startDay,
-			int endYear, int endMonth, int endDay);
 	
 	private Money unitPrice;
 	private Money reducedPrice;
 	private Discount discount;
+	private String unitId;
+	private ItemDescription itemDesc;
 	
 	protected Item(String unitId, double unitPrice){
 		checkParametersValidity(unitId, unitPrice);
 		this.unitId = unitId;
 		this.unitPrice = new Money(unitPrice, "SEK");
+	}
+	
+	Item(String unitId, double unitPrice, ItemDescription itemDesc) {
+		this(unitId, unitPrice);
+		this.itemDesc = itemDesc;
 	}
 	
 	private void checkParametersValidity(String unitId, double unitPrice) {
@@ -208,4 +183,12 @@ public abstract class Item implements Comparable<Item>{
 		}
 		return true;
 	}
+	
+	@Override
+	public int compareTo(Item other) {
+		return other.getID().compareTo(getID());
+	}
+	
+	abstract public void setSpecialOfferDiscount(String discountType, int startYear, int startMonth, int startDay,
+			int endYear, int endMonth, int endDay);
 }

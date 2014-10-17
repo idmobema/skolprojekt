@@ -14,7 +14,7 @@ public class ItemTester {
 	
 	@Before
 	public void setUp(){
-		cereals = new PricedPerPiece("Name", "Cer69MAN008", 25.15);
+		cereals = new PricedPerPiece("Cer69MAN008", 25.15);
 		bambiMeat = new PricedPerWeight("Cha12HUN005", 208.66, "kg");
 		specOf = new SpecialOffer("2for1", 2015, 5, 10, 2015, 5, 15);
 		priceD = new PriceDiscount(25, 2015, 5, 10, 2015, 5, 15);

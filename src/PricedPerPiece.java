@@ -32,9 +32,9 @@
 
 public class PricedPerPiece extends Item {
 	
-		
+	PricedPerPiece(String unitId, double unitPrice)	 {
+		super(unitId, unitPrice);
 	}
-	
 	public void setSpecialOfferDiscount(String discountType, int startYear, int startMonth, int startDay,
 			int endYear, int endMonth, int endDay) {
 		Discount discount = new SpecialOffer(discountType, startYear, startMonth, startDay, endYear, endMonth, endDay);
