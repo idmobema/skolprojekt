@@ -1,14 +1,14 @@
 import java.math.BigDecimal;
 
 
-public abstract class Item implements Comparable<Item>{
+public class Item implements Comparable<Item>{
 	
 	private Money unitPrice;
 	private Money reducedPrice;
 	private Discount discount;
 	private String unitId;
 	private ItemDescription itemDesc;
-	
+
 	protected Item(String unitId, double unitPrice){
 		checkParametersValidity(unitId, unitPrice);
 		this.unitId = unitId;
@@ -189,6 +189,7 @@ public abstract class Item implements Comparable<Item>{
 		return other.getID().compareTo(getID());
 	}
 	
-	abstract public void setSpecialOfferDiscount(String discountType, int startYear, int startMonth, int startDay,
-			int endYear, int endMonth, int endDay);
+	public ItemDescription getItemDesc() {
+		return itemDesc;
+	}
 }

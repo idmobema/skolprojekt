@@ -16,9 +16,10 @@ public class Pos {
 		String butter = "12345678902";
 		String milk = "12345678903";
 		
-		inventory.put(kexchoklad, new PricedPerPiece("Kexchoklad", kexchoklad, 7));
-		inventory.put(butter, new PricedPerPiece("Butter", butter, 29));
-		inventory.put(milk, new PricedPerPiece("Milk", milk, 10));
+		
+		inventory.put(kexchoklad, new Item("Kexchoklad", kexchoklad, 7));
+		inventory.put(butter, new Item("Butter", butter, 29));
+		inventory.put(milk, new Item("Milk", milk, 10));
 		
 		//new customer
 		Sale sale = new Sale();
