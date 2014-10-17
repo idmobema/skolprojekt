@@ -3,16 +3,17 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 
-//de riktnummer som inte finns?
-//mobilnummer alltid sju siffror i number?
-//Får number börja med 0?
-
 public class PhoneNumberTest {
 
 	@Test
 	public void testThatAreaCodeIsSaved() {
 		PhoneNumber nbr = new PhoneNumber("070", "1122334");
 		assertEquals("070", nbr.getAreaCode());
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testNullAreaCode(){
+		PhoneNumber nbr = new PhoneNumber(null, "198876");
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
@@ -52,10 +53,17 @@ public class PhoneNumberTest {
 		PhoneNumber nbr = new PhoneNumber("008", "123456");
 	}
 	
+	
+	
 	@Test
 	public void testThatNbrIsSaved(){
 		PhoneNumber nbr = new PhoneNumber("08", "9988776");
 		assertEquals("9988776", nbr.getNbr());
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testNullNbr(){
+		PhoneNumber nbr = new PhoneNumber("070", null);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)

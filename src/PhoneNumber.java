@@ -7,6 +7,8 @@ public class PhoneNumber {
 	
 	public PhoneNumber(String areaCode, String nbr){
 		
+		if(areaCode == null)
+			throw new IllegalArgumentException();
 		if(areaCode.length() < 2 || areaCode.length() > 4)
 			throw new IllegalArgumentException("Riktnumret måste vara mellan 2 och 4 siffror");
 		if(!areaCode.startsWith("0"))
@@ -16,6 +18,9 @@ public class PhoneNumber {
 		Integer.parseInt(areaCode); //Ingen text om vad felet är när det inte funkar
 		this.areaCode = areaCode;
 		
+		
+		if(nbr == null)
+			throw new IllegalArgumentException();
 		if(nbr.length() < 5 || nbr.length() > 8)
 			throw new IllegalArgumentException("Numret måste vara mellan 5 och 8 siffror");
 		int nbrAsInt = Integer.parseInt(nbr); //Ingen text om vad felet är när det inte funkar
