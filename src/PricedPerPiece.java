@@ -32,8 +32,6 @@
 
 public class PricedPerPiece extends Item {
 	
-	public PricedPerPiece(String unitID, double unitPrice){
-		super(unitID, unitPrice);
 		
 	}
 	

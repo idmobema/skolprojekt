@@ -208,6 +208,4 @@ public abstract class Item implements Comparable<Item>{
 		}
 		return true;
 	}
-	
-	
 }

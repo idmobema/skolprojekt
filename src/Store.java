@@ -1,34 +1,51 @@
+import java.util.ArrayList;
 
 public class Store {
 
 	private String name;
-	private String adress;
-	private String phoneNbr;
-	
-	public Store(String name, String adress, String phoneNbr){
-		if(name == "")
+	private Address address;
+	private ArrayList<PhoneNumber> phoneNbrs = new ArrayList<>();
+
+	public Store(String name, Address addr, PhoneNumber nbr) {
+
+		if(name == null || name == "" || addr == null || nbr == null)
 			throw new IllegalArgumentException();
 		this.name = name;
-		this.adress = adress;
-		this.phoneNbr = phoneNbr;
+		address = addr;
+		phoneNbrs.add(nbr);
+
 	}
-	
-	public String getName(){
+
+	public String getName() {
 		return name;
 	}
 	
-	public String getAdress(){
-		return adress;
+	public void setAddress(Address addr){
+		address = addr;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public ArrayList<PhoneNumber> getPhoneNumbers() {
+		return phoneNbrs;
 	}
 	
-	public String getPhoneNbr(){
-		return phoneNbr;
+	public void addPhoneNumber(PhoneNumber nbr){
+		if(!phoneNbrs.contains(nbr))
+			phoneNbrs.add(nbr);
 	}
 	
-	public String toString(){
-		return name + ", " + adress + ", tel. " + phoneNbr;
+	public PhoneNumber removePhoneNumber(int index){
+		return phoneNbrs.remove(index);
 	}
-	
-	
+
+	public String toString() {
+		String all = name + "\n\nAdress:\n" + address + "\n\nTelefon:";
+		for(PhoneNumber nbr : phoneNbrs)
+			all += "\n" + nbr;
+		return  all;
+	}
 
 }

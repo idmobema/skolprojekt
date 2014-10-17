@@ -1,0 +1,32 @@
+1 Create a validity field for the discount
+1.1 Validity from - a startDate
+1.2 Validity until - an endDate
+
+2 Create a TimeValidity class
+
+3. Add a check method for the endDate.
+4. Refactor the checkStartMonthAndStartDayBoundaries: CALENDAR.getActualMaximum(Calendar.DAY_OF_THE_MONTH)
+is possible to return the current month's maximum day.
+
+5.Create getters and (private)setters for the fields
+
+6. Refactor the checkDate. Possible new class DateChecker
+
+7. toString() for TimeValidity
+
+8. Refactor TimeValidityDatesChecker.checkStartEndOrder()
+ and TimeValidityDatesChecker.checkRetroactiveStartDate()
+9. Describe TimeValidityDatesChecker
+
+
+
+10. toString() for Discount
+11. Describe Discount class
+12. setTimeValidity()for Discount
+13. implement compareTo and equals for TimeValidity
+14. change the TimeValidity class
+	14.1 The fields should be private Date startDate, endDate
+	
+	MONDAY
+1. Implement compareTo and equals for Discount class.
+2. Start another class from the diagram.
