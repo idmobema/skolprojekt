@@ -156,4 +156,21 @@ public class MoneyTests {
 		result = ten.times(1.494492);
 		assertEquals(new BigDecimal("14.94"), result.getAmount());
 	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructorThatTakesLongAndString() {
+		new Money(-1L, "SEK");
+	}
+
+	@Test
+	public void testConstructorThatTakesLongAndCurrency() {
+		Money testMoney = new Money(100, Currency.getInstance("SEK"));
+		assertEquals(new BigDecimal("1.00"), testMoney.getAmount());
+	}
+	
+	@Test
+	public void testEqualityWithOtherClassAndNull() {
+		assertFalse(ten.equals(new Object()));
+		assertFalse(ten.equals(null));
+	}
 }

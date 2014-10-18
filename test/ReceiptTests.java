@@ -171,4 +171,25 @@ public class ReceiptTests {
 		assertTrue(r1.toString().contains(item2));
 		assertTrue(r1.toString().contains("0.757kg"));
 	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddLineThatTakesMoneyWithNegativeQuantity() {
+		r1.addLine(-1, item1, Money.getCrowns(19.9), Money.getCrowns(39.8));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddLineThatTakesMoneyWithZeroQuantity() {
+		r1.addLine(0, item1, Money.getCrowns(19.9), Money.getCrowns(39.8));
+	}
+	
+	@Test
+	public void testAddLineThatTakesMoneyWithLargeQuantity() {
+		r1.addLine(999, item1, Money.getCrowns(19.9), Money.getCrowns(39.8));
+		assertTrue(r1.toString().contains("999"));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testOtherAddLineThatTakesMoneyWithNegativeWeight() {
+		r1.addLine(-0.757, item2, Money.getCrowns(24.9), Money.getCrowns(18.85));
+	}
 }
