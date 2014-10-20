@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Skolprojekt" default="compile" basedir=".">
-	<target name="compile" description="Compiles all classes">
-		<mkdir dir="build"/>
-		<javac srcdir="src" destdir="build"/>
+<project name="Skolprojekt" default="package" basedir=".">
+  <property name="srcpath" location="src"/>
+  <property name="buildpath" location="build"/>
+  <property name="distpath" location="dist"/>
+    
+  <target name="init" description="Creates directory build">
+    <mkdir dir="${buildpath}"/>
+  </target>
+  
+	<target name="compile" depends="init" description="Compiles all classes">
+		<javac srcdir="${srcpath}" destdir="${buildpath}"/>
 	</target>
+  
+  <target name="package" depends="compile" description="Package classes in jar-file">
+    <mkdir dir="${distpath}"/>
+    <jar jarfile="${distpath}/build.jar" basedir="${buildpath}"/>
+  </target>
 </project>

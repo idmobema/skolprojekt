@@ -1,7 +1,8 @@
-bin/
+/bin/
 .classpath
 .project
 .DS_Store
 /build/
+/dist/
 .settings
 /TODO
