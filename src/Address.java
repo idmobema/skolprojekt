@@ -40,7 +40,7 @@ public class Address {
 			//Ett gatunamn med bokstav ska kunna tolkas som int om man tar bort bokstaven och ev space.
 			nbrAsInt = Integer.parseInt(streetNumber.substring(0, streetNumber.length() - 1).trim());
 		}
-		//gatunumret får inte vara 0 eller negativt
+		//gatunumret fÃ¥r inte vara 0 eller negativt
 		if(nbrAsInt < 1)
 				throw new IllegalArgumentException();
 		return streetNumber;
@@ -52,7 +52,7 @@ public class Address {
 		if(postalCode == null)
 			throw new IllegalArgumentException();
 		int codeLength = postalCode.length();
-		//om längden ska vara 5 eller 6 beror på om den är skriven med mellanslag eller ej
+		//om lÃ¤ngden ska vara 5 eller 6 beror pÃ¥ om den Ã¤r skriven med mellanslag eller ej
 		if(postalCode.startsWith("0") || codeLength < 5 || codeLength > 6 )
 			throw new IllegalArgumentException();
 		if(codeLength == 6)
