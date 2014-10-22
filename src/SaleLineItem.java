@@ -30,7 +30,7 @@ public class SaleLineItem {
 	public String toString() {
 		// Lägger till rad med styckvara
 		 
-		if (quantity <= 0 || quantity > Receipt.MAX_QUANTITY)
+		if (quantity > Receipt.MAX_QUANTITY)
 			throw new IllegalArgumentException("Invalid quantity: " + quantity + ". Value between 1 and " + Receipt.MAX_QUANTITY + " required.");
 		String itemName = Receipt.checkItemName(item.getItemDesc().getName());
 		Receipt.checkPrices(item.getUnitPrice().getAmount().doubleValue(), getSubTotal().getAmount().doubleValue());
