@@ -107,4 +107,20 @@ public class TimeValidityTester {
 		
 		assertFalse(expected || actual);
 	}
+	
+	@Test
+	public void testEquals3() {
+		TimeValidity tV1 = new TimeValidity(2014, 10, 10, 2014, 11, 15);
+		TimeValidity tV2 = new TimeValidity(2014, 9, 10, 2014, 11, 15);
+		
+		assertFalse(tV1.equals(tV2));
+	}
+	
+	@Test
+	public void testCompareTo() {
+		TimeValidity tV1 = new TimeValidity(2014, 10, 10, 2014, 11, 15);
+		TimeValidity tV2 = new TimeValidity(2014, 9, 10, 2014, 11, 15);
+
+		assertTrue(tV2.compareTo(tV1) < 0);
+	}
 }
