@@ -23,30 +23,7 @@ public abstract class Discount{
 		this.timeValidity = new TimeValidity(startYear, startMonth, startDay, endYear, endMonth, endDay);
 	}
 	
-
-
 	public abstract String getOfferName();
-	
-	
-	@Override
-	public boolean equals(Object obj){
-		
-		if(! (obj instanceof Discount) || obj == null)
-			return false;
-		Discount other = (Discount) obj;
-
-		if(this.getTimeValidity() == other.timeValidity && this.getOfferName().equals(other.getOfferName()))
-			return true;
-		else
-			return false;
-	}
-	
-	@Override
-	public int hashCode(){
-		int hash = 1;
-		hash = hash * 13 + (timeValidity == null ? 0 : timeValidity.hashCode());
-		return hash;
-	}
 	
 	public String toString(){
 		
