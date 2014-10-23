@@ -1,7 +1,7 @@
-import java.math.BigDecimal;
 
 
-public class Item implements Comparable<Item>{
+
+public class Item {
 	
 	private Money unitPrice;
 	private Money reducedPrice;
@@ -84,12 +84,8 @@ public class Item implements Comparable<Item>{
 		Money result;
 		
 		double percentage = ((PriceDiscount) discount).getPercentage();
-		BigDecimal bDDividend = unitPrice.getAmount();
-		BigDecimal bDDivisor = new BigDecimal(Double.toString(100 / percentage));
+		result = unitPrice.times((100 - percentage) * 0.01);
 		
-		bDDividend = bDDividend.subtract(bDDividend.divide(bDDivisor, 2, BigDecimal.ROUND_UP));
-		result = new Money(bDDividend.doubleValue(), "SEK");
-
 		return result;
 	}
 
@@ -185,10 +181,6 @@ public class Item implements Comparable<Item>{
 		return true;
 	}
 	
-	@Override
-	public int compareTo(Item other) {
-		return other.getID().compareTo(getID());
-	}
 	
 	public ItemDescription getItemDesc() {
 		return itemDesc;
