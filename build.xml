@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project name="Skolprojekt" default="compile" basedir=".">
-	<property name="srcpath" location="src"/>
-	<target name="compile" description="Compiles all classes">
-		<mkdir dir="build"/>
-		<javac srcdir="src" destdir="build"/>
-	</target>
-</project>
