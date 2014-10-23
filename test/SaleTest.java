@@ -15,13 +15,24 @@ public class SaleTest {
 	@Test
 	public void testAdd() {
 		Sale sale = new Sale();
-		Item kexchoklad = new Item(new ItemDescription("Kexchoklad", "", new Money(700, "SEK"), "12345678902"));;
+		Item kexchoklad = new Item(new ItemDescription("Kexchoklad", "", new Money(700, "SEK"), "12345678902"));
 		sale.add(kexchoklad);
 		for(SaleLineItem i : sale) {
 			assertEquals(i.getItemName(), "Kexchoklad");
 			
 		}
 		
+	}
+	
+	@Test
+	public void testAddTwo() {
+		Sale sale = new Sale();
+		Item kexchoklad = new Item(new ItemDescription("Kexchoklad", "", new Money(700, "SEK"), "12345678902"));
+		sale.add(kexchoklad);
+		sale.add(kexchoklad);
+		for(SaleLineItem i : sale) {
+			assertEquals(i.getQuantity(), 2);
+		}
 	}
 	
 	@Test

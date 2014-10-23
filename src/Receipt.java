@@ -164,7 +164,6 @@ public class Receipt {
 		str += delimiter;
 		str += createSaleInfo();
 		str += delimiter;
-		// "Dubbeljobb" här - hur göra?
 		for (SaleLineItem sli : sale)
 			str += sli.toString();
 		for (String line : lines)

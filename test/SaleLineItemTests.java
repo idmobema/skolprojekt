@@ -20,5 +20,19 @@ public class SaleLineItemTests {
 		assertEquals(sli.getSubTotal(), new Money(3000, "SEK"));
 	}
 	
-
+	@Test
+	public void testToString() {
+		SaleLineItem sli = new SaleLineItem(new Item(new ItemDescription("MumsMums", "", new Money(1500, "SEK"), "12345678902")));
+		assertTrue(sli.toString().contains("MumsMums"));
+		sli.increaseQuantity();
+		assertTrue(sli.toString().contains("2"));
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testToBigQuantity() {
+		SaleLineItem sli = new SaleLineItem(new Item(new ItemDescription("MumsMums", "", new Money(1500, "SEK"), "12345678902")));
+		for(int i = 0; i <= 1000; i++)
+			sli.increaseQuantity();
+		sli.toString();
+	}
 }

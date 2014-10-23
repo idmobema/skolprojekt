@@ -89,19 +89,12 @@ public class SpecialOffer extends Discount{
 		
 		return sameDiscountType && sameBuyQuantity && sameGetFreeQuantity && sameTimeValidity;
 	}
-	
+
 	@Override
-	public int hashCode(){
-		int hash = 1;
-		
-		hash = hash * 17 + (offerName == null ? 0 : offerName.hashCode());
-		hash = hash * 23 + buyQuantity;
-		hash = hash * 13 + getFreeQuantity;
-		hash = hash * 31 + (getTimeValidity() == null ? 0 : getTimeValidity().hashCode());
-		
-		return hash;
+	public int hashCode() {
+		return 31 * buyQuantity + 31 * getFreeQuantity + offerName.hashCode(); 
 	}
-	
+
 	public String toString(){
 		String result = "Identifier " + offerName + "\n" + super.toString();
 		result += "\nStatus: " + (isOfferActive() ? "active" : "inactive");

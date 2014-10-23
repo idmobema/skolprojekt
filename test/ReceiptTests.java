@@ -192,4 +192,10 @@ public class ReceiptTests {
 	public void testOtherAddLineThatTakesMoneyWithNegativeWeight() {
 		r1.addLine(-0.757, item2, Money.getCrowns(24.9), Money.getCrowns(18.85));
 	}
+	
+	@Test
+	public void testToStringSomeMoreForFullCoverage() {
+		sale.add(new Item(new ItemDescription("Kexchoklad", "", new Money(700, "SEK"), "12345678901")));
+		assertTrue(new Receipt(sale).toString().contains("Kexchoklad"));
+	}
 }
