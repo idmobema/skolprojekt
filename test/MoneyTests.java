@@ -88,7 +88,7 @@ public class MoneyTests {
 		new Money(200, "SE");
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = NullPointerException.class)
 	public void testCurrencyCodeSetToNull() {
 		String currencyCode = null;
 		new Money(200, currencyCode);

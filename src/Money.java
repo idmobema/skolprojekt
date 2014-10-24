@@ -17,8 +17,11 @@ public class Money implements Comparable<Money> {
 		try {
 			this.currency = Currency.getInstance(currencyCode);
 		}
-		catch (Exception e) {
+		catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException("Invalid currency code: " + currencyCode);
+		}
+		catch (NullPointerException e) {
+			throw new NullPointerException("Invalid currency code: null");
 		}
 	}
 
