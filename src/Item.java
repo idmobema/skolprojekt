@@ -1,7 +1,7 @@
 
 
 
-public class Item {
+public class Item implements Comparable<Object>{
 	
 	private Money unitPrice;
 	private Money reducedPrice;
@@ -184,5 +184,14 @@ public class Item {
 	
 	public ItemDescription getItemDesc() {
 		return itemDesc;
+	}
+
+
+
+	@Override
+	public int compareTo(Object anotherItem) {
+		
+		return this.equals(anotherItem) ? 0 : unitId.compareTo(((Item)anotherItem).getID());
+			
 	}
 }

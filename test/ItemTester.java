@@ -145,4 +145,13 @@ public class ItemTester {
 
 	}
 
+	@Test
+	public void testCompareTo(){
+		Item something = new PricedPerPiece("Cer69MAN008", 25.15);
+		boolean equalItems = something.equals(cereals);
+		int compared = something.compareTo(cereals);
+		
+		assertTrue(equalItems && compared == 0);
+		
+	}
 }
