@@ -8,9 +8,11 @@
  * #BC141004# */
 
 import static org.junit.Assert.*;
-
 import org.junit.After;
 import org.junit.Test;
+
+import java.util.GregorianCalendar;
+
 
 public class TimeValidityTester {
 	TimeValidity timeValidity;
@@ -122,5 +124,14 @@ public class TimeValidityTester {
 		TimeValidity tV2 = new TimeValidity(2014, 9, 10, 2014, 11, 15);
 
 		assertTrue(tV2.compareTo(tV1) < 0);
+	}
+	
+	@Test
+	public void testGetEndDate(){
+		TimeValidity tV = new TimeValidity(2014, 10, 10, 2014, 11, 15);
+		GregorianCalendar endDateExpected = new GregorianCalendar(2014, 11, 15);
+		GregorianCalendar endDateActual = tV.getEndDate();
+		
+		assertEquals(endDateExpected, endDateActual);
 	}
 }

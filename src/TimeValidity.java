@@ -108,6 +108,10 @@ public class TimeValidity implements Comparable<TimeValidity>{
 		setEndDay(endDay);
 	}
 
+	public GregorianCalendar getEndDate(){
+		return (GregorianCalendar) endDate;
+	}
+	
 	/** The startMonth and endMonth values to be read as +1. */
 	public String toString(){
 		

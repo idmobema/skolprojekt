@@ -15,6 +15,10 @@ public class Item implements Comparable<Object>{
 		this.unitPrice = new Money(unitPrice, "SEK");
 	}
 	
+	// What kind of item is this? PricedPerPiece or PricedPerWeight?
+	// Why bypass the first constructor?
+	// Why change the abstract modifier of this class?
+	
 	Item(ItemDescription itemDesc) {
 		this.unitId = itemDesc.getItemId();
 		this.unitPrice = itemDesc.getPrice();
@@ -70,14 +74,9 @@ public class Item implements Comparable<Object>{
 	}
 
 	private Money computeReducedPrice() {
-		Money result;
 		
-		if(discount instanceof PriceDiscount)
-			result = computeRDWithPriceDiscount();	
-		else
-			result = null;
-		
-		return result;
+		return discount instanceof PriceDiscount ? computeRDWithPriceDiscount() : null;
+
 	}
 
 	private Money computeRDWithPriceDiscount() {
