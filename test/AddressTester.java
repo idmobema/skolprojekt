@@ -11,7 +11,7 @@ public class AddressTester {
 		assertEquals("V�gen", addr.getStreet());
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = NullPointerException.class)
 	public void testNullStreet(){
 		Address addr = new Address(null, "2", "22345", "Hemma");
 	}
@@ -29,7 +29,7 @@ public class AddressTester {
 		assertEquals("2", addr.getStreetNumber());
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = NullPointerException.class)
 	public void testNullStreetNumber(){
 		Address addr = new Address("V�g", null, "22345", "Hemma");
 	}
@@ -76,7 +76,7 @@ public class AddressTester {
 		assertEquals("778 89", addr.getPostalCode());
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = NullPointerException.class)
 	public void testNullPostalCode(){
 		Address addr = new Address("V�gen", "2", null, "Hemma");
 	}
@@ -117,7 +117,7 @@ public class AddressTester {
 		assertEquals("V�ster�s", addr.getPostTown());
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = NullPointerException.class)
 	public void testNullPostTown(){
 		Address addr = new Address("V�gen", "2", "22345", null);
 	}
