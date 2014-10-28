@@ -17,18 +17,17 @@ public class Receipt {
 	
 	private Sale sale;
 	private String saleInfo = "";
-	private String total = "";
 	private int receiptNo;
 	private List<String> lines = new ArrayList<>();
 	
-	public Receipt(Sale ms) {
-		sale = ms;
+	protected Receipt(Sale sale) {
+		this.sale = sale;
 		numberOfReceipts++;
 		receiptNo = numberOfReceipts;
 	}
 	
 	// Skapar kvittots "sidhuvud"
-	public static void createHeader(String ... headerStrings) {
+	protected static void createHeader(String ... headerStrings) {
 		String header = "";
 		for (String str : headerStrings)
 			header += center(str) + "\n";
@@ -36,7 +35,7 @@ public class Receipt {
 	}
 	
 	// Skapar kvittots "sidfot"
-	public static void createFooter(String ... footerStrings) {
+	protected static void createFooter(String ... footerStrings) {
 		String footer = "";
 		for (String str : footerStrings)
 			footer += center(str) + "\n";
@@ -60,7 +59,7 @@ public class Receipt {
 	}
 	
 	// Skapar avgränsare mellan kvittots olika delar
-	public static void createDelimiter(char delimiterChar) {
+	protected static void createDelimiter(char delimiterChar) {
 		String delimiter = "";
 		for (int i=0; i < LINE_WIDTH; i++)
 			delimiter += delimiterChar;
@@ -69,7 +68,7 @@ public class Receipt {
 	}
 	
 	// Skapar avsnitt med information om försäljningstillfället
-	public String createSaleInfo() {
+	protected String createSaleInfo() {
 		saleInfo = "Kvittonr: " + receiptNo + "\n";
 		saleInfo += "Kassör: " + sale.getCashier() + "\n";
 		saleInfo += sale.getDate() + " " + sale.getTime() + "\n";
@@ -80,8 +79,8 @@ public class Receipt {
 		return receiptNo;
 	}
 	
-	// Motsvarande metod som tar priser i Money
-	public void addLine(int quantity, String itemName, Money itemPrice, Money subTotal) {
+	// Lägger till rad med styckvara, tar priser i Money
+	protected void addLine(int quantity, String itemName, Money itemPrice, Money subTotal) {
 		if (quantity <= 0 || quantity > MAX_QUANTITY)
 			throw new IllegalArgumentException("Invalid quantity: " + quantity + ". Value between 1 and " + MAX_QUANTITY + " required.");
 		itemName = checkItemName(itemName);
@@ -92,7 +91,7 @@ public class Receipt {
 	}
 	
 	// Lägger till rad med vägd vara
-	public void addLine(double weight, String itemName, double itemPrice, double subTotal) {
+	protected void addLine(double weight, String itemName, double itemPrice, double subTotal) {
 		if (weight <= 0) 
 			throw new IllegalArgumentException("Invalid weight: " + weight + ". Value must be positive.");
 		itemName = checkItemName(itemName);
@@ -103,7 +102,7 @@ public class Receipt {
 	}
 	
 	// Motsvarande metod som tar priser i Money
-	public void addLine(double weight, String itemName, Money itemPrice, Money subTotal) {
+	protected void addLine(double weight, String itemName, Money itemPrice, Money subTotal) {
 		if (weight <= 0) 
 			throw new IllegalArgumentException("Invalid weight: " + weight + ". Value must be positive.");
 		itemName = checkItemName(itemName);
@@ -113,7 +112,7 @@ public class Receipt {
 	}
 	
 	// Hjälpmetod för att kontrollera och eventuellt formatera varunamnet
-	static String checkItemName(String itemName) {
+	protected static String checkItemName(String itemName) {
 		if (itemName.length() < MIN_NAME_LENGTH)
 			throw new IllegalArgumentException("Invalid item name. Minimum " + MIN_NAME_LENGTH + " characters required.");
 		if (itemName.length() > MAX_NAME_LENGTH)
@@ -122,7 +121,7 @@ public class Receipt {
 	}
 	
 	// Hjälpmetod för att kontrollera styck- och totalpriser
-	static void checkPrices(double itemPrice, double subTotal) {
+	protected static void checkPrices(double itemPrice, double subTotal) {
 		if (itemPrice <= 0) 
 			throw new IllegalArgumentException("Invalid item price: " + itemPrice + ". Price must not be negative.");
 		if (subTotal <= 0) 
@@ -130,7 +129,7 @@ public class Receipt {
 	}
 	
 	// Hjälpmetod för att formatera pris
-	static String formatPrice(double price) {
+	protected static String formatPrice(double price) {
 		return String.format(Locale.US, "%.2f", price);
 	}
 	
@@ -140,7 +139,7 @@ public class Receipt {
 		return first + makeSpace(numberOfSpaces) + second + "\n";
 	}
 
-	public void deleteLine(String itemName) {
+	protected void deleteLine(String itemName) {
 		String lineToRemove = null;
 		for (String line : lines) {
 			if (line.contains(itemName))
@@ -150,7 +149,8 @@ public class Receipt {
 	}
 	
 	// Skapar avsnitt med totalpriset
-	public String createTotal() {
+	protected String createTotal() {
+		String total = "";
 		String priceString = "" + sale.getTotal();
 		total += makeSpace(LINE_WIDTH - 10) + "==========\n";
 		total += formatLine("TOTALT ATT BETALA", priceString);
