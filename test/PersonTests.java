@@ -8,8 +8,8 @@ public class PersonTests {
 	private Person p;
 	private String firstName = "Mats";
 	private String lastName = "Rörbecker";
-	private String address = "Tellusborgsvägen 1 126 32 Hägersten";
-	private String phoneNo = "070-207 28 67";
+	private Address address = new Address("Tellusborgsvägen", "1", "126 32", "Hägersten");
+	private PhoneNumber phoneNo = new PhoneNumber("070", "2072867");
 	
 	@Before
 	public void setUp() {
@@ -24,6 +24,11 @@ public class PersonTests {
 	@Test
 	public void testIfPersonHasLastName() {
 		assertEquals(lastName, p.getLastName());
+	}
+	
+	@Test
+	public void testIfPersonHasFullName() {
+		assertEquals(firstName + " " + lastName, p.getName());
 	}
 	
 	@Test(expected = IllegalArgumentException.class) 
@@ -59,4 +64,24 @@ public class PersonTests {
 		Customer c2 = new Customer(firstName, lastName, address, phoneNo);
 		assertTrue(c2.getCustomerNo() - c1.getCustomerNo() == 1);
 	}
+
+	@Test
+	public void testIfPersonHasAddress() {
+		assertEquals(address, p.getAddress());
+	}
+	
+	@Test
+	public void testIfToStringReturnsAddress() {
+		assertTrue(p.toString().contains(address.getStreet()));
+	}
+	
+	@Test
+	public void testIfPersonHasPhoneNumber() {
+		assertEquals(phoneNo, p.getPhoneNumber());
+	}
+	
+	@Test
+	public void testIfToStringReturnsPhoneNumber() {
+		assertTrue(p.toString().contains(phoneNo.getAreaCode()));
+	}	
 }

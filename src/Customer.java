@@ -5,7 +5,7 @@ public class Customer extends Person {
 	
 	private int customerNo;
 	
-	public Customer(String firstName, String lastName, String adress, String phoneNo) {
+	public Customer(String firstName, String lastName, Address adress, PhoneNumber phoneNo) {
 		super(firstName, lastName, adress, phoneNo);
 		numberOfCustomers++;
 		customerNo = numberOfCustomers;

@@ -1,12 +1,16 @@
 
 public class Person {
 	private String firstName, lastName;
+	private Address address;
+	private PhoneNumber phoneNo;
 	
-	public Person(String firstName, String lastName, String address, String phoneNo) {
+	public Person(String firstName, String lastName, Address address, PhoneNumber phoneNo) {
 		checkName(firstName);
 		checkName(lastName);
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.address = address;
+		this.phoneNo = phoneNo;
 	}
 	
 	private void checkName(String name) {
@@ -24,8 +28,20 @@ public class Person {
 		return lastName;
 	}
 	
+	public String getName() {
+		return firstName + " " + lastName;
+	}
+	
+	public Address getAddress() {
+		return address;
+	}
+	
+	public PhoneNumber getPhoneNumber() {
+		return phoneNo;
+	}
+	
 	@Override
 	public String toString() {
-		return firstName + " " + lastName;
+		return firstName + " " + lastName + "\n" + address + "\n" + phoneNo;
 	}
 }
