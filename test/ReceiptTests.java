@@ -152,7 +152,7 @@ public class ReceiptTests {
 	@Test
 	public void testFormattingOfReceiptLine() {
 		String subTotal = "39.80";
-		String receiptLine = r1.formatLine(item1, subTotal);
+		String receiptLine = Receipt.formatLine(item1, subTotal);
 		assertEquals(receiptLine.length(), 41);
 		assertEquals(subTotal, receiptLine.substring(35, 40));
 	}
