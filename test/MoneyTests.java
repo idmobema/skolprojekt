@@ -184,32 +184,32 @@ public class MoneyTests {
 	// TestCase id T2
 	@Test(expected = IllegalArgumentException.class)
 	public void testNegativeDoubleAmountParam(){
-		Money money = new Money(-8.34, "SEK");
+		new Money(-8.34, "SEK");
 	}
 	
 	// TestCase id T3
 	@Test(expected = NullPointerException.class)
 	public void testNullCurrencyInConstructor(){
 		Currency currency = null;
-		Money money = new Money(10.20, currency);
+		new Money(10.20, currency);
 	}
 	
 	// TestCase id T4
 	@Test(expected = NullPointerException.class)
 	public void testNullStringInConstructor(){
 		String currency = null;
-		Money money = new Money(10.20, currency);
+		new Money(10.20, currency);
 	}
 	
 	// TestCase id T5
 	@Test(expected = IllegalArgumentException.class)
 	public void testNonExistentCurrencyCodeInConstructor(){
-		Money money = new Money(10.20, "UÄK");
+		new Money(10.20, "UÄK");
 	}
 	
 	// TestCase id T6
 	@Test(expected = IllegalArgumentException.class)
 	public void testEmptyStringForCurrencyCode(){
-		Money money = new Money(10.20, "");
+		new Money(10.20, "");
 	}
 }
