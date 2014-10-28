@@ -184,6 +184,11 @@ public class Item implements Comparable<Object>{
 	public ItemDescription getItemDesc() {
 		return itemDesc;
 	}
+	
+	public DiscountResult getDiscountResult(int quantity) {
+		//Result for no discount, should return calculated discount if there is one
+		return new DiscountResult(null, new Money(0, "SEK")); 	
+	}
 
 
 

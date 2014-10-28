@@ -1,10 +1,12 @@
 
-public class SaleLineItem {
+public class SaleLineItem implements Comparable<SaleLineItem> {
 	private Item item;
 	private int quantity = 1;
+	private int lineNo = 0;
 	
-	public SaleLineItem(Item item) {
+	public SaleLineItem(Item item, int lineNo) {
 		this.item = item;
+		this.lineNo = lineNo;
 	}
 	
 	public int getQuantity() {
@@ -27,6 +29,11 @@ public class SaleLineItem {
 		return subtotal;
 	}
 	
+	public Money getDiscountAmount() {
+		return item.getDiscountResult(quantity).getDiscountAmount();
+	}
+	
+	
 	public String toString() {
 		// Lägger till rad med styckvara
 		 
@@ -37,8 +44,18 @@ public class SaleLineItem {
 		String str = Receipt.formatLine(itemName, getSubTotal().toString());
 		if (quantity > 1) // Om större kvantitet än 1, lägg till extrarad med prisuträkning
 			str += "  " + quantity + "st x " + item.getUnitPrice() + "\n";
+		DiscountResult dr = item.getDiscountResult(quantity);
+		if (dr.getDiscountDescription() != null) {
+			str += Receipt.formatLine(dr.getDiscountDescription(), "-" + dr.getDiscountAmount().toString());
+		}
 		return str;		
 			
+	}
+
+	@Override
+	public int compareTo(SaleLineItem o) {
+
+		return lineNo - o.lineNo;
 	}
 	
 	

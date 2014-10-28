@@ -9,7 +9,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		PriceDiscountTester.class, PricedPerPieceTester.class,
 		PricedPerWeightTester.class, ReceiptTests.class,
 		SaleLineItemTests.class, SaleTest.class, SpecialOfferTester.class,
-		StoreTest.class, TimeValidityTester.class })
+		StoreTest.class, TimeValidityTester.class, DiscountResult.class })
 public class AllTests {
 
 }
