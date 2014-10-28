@@ -13,14 +13,16 @@ public class Sale implements Iterable<SaleLineItem> {
 	private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	private static DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 	private int lineNo = 0;
-	//temporary
+	
 	private Cashier cashier = new Cashier("Icander", "Coop", new Address("Fågelvägen", "4", "126 34", "Hägersten"), new PhoneNumber("08", "123456"));
 	
+	//return an iterator sorted on lineNo
 	public Iterator<SaleLineItem> iterator() {
 		ArrayList<SaleLineItem> sli = new ArrayList<SaleLineItem>(saleLines.values());
 		Collections.sort(sli);
 		return sli.iterator();
 	}
+	//Add item to saleLines or increase the quantity if already exists
 	public void add(Item item) {
 		if(saleLines.containsKey(item)) {
 			saleLines.get(item).increaseQuantity();
@@ -38,7 +40,7 @@ public class Sale implements Iterable<SaleLineItem> {
 		return timeFormat.format(date);
 		
 	}
-	
+	//Calculating the total sum
 	public Money getTotal() {
 		Money currentTotal = new Money(0, "SEK");
 		for(SaleLineItem sli: this) {

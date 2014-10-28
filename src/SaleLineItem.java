@@ -21,6 +21,7 @@ public class SaleLineItem implements Comparable<SaleLineItem> {
 		return item.getItemDesc().getName();
 	}
 	
+	
 	public Money getSubTotal() {
 		Money subtotal = new Money(0,"SEK");
 		for(int i = 0 ; i<quantity; ++i) {
