@@ -83,5 +83,13 @@ public class PersonTests {
 	@Test
 	public void testIfToStringReturnsPhoneNumber() {
 		assertTrue(p.toString().contains(phoneNo.getAreaCode()));
-	}	
+	}
+	
+	@Test
+	public void testCashier() {
+		Cashier c = new Cashier(firstName, lastName, address, phoneNo);
+		assertTrue(c.toString().contains(firstName + " " + lastName));
+		assertTrue(c.toString().contains(address.toString()));
+		assertTrue(c.toString().contains(phoneNo.toString()));
+	}
 }
