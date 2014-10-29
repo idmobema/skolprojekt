@@ -160,4 +160,16 @@ public class ItemTester {
 		cereals.setDiscount(priceD);
 		assertTrue(cereals.hasDiscount());
 	}
+	
+	@Test
+	public void testHasDiscount2(){
+		SpecialOffer sO = new SpecialOffer("Two for One", 2015, 3, 15, 2015, 3, 20);
+		cereals.setDiscount(sO);
+		assertTrue(cereals.hasDiscount());
+	}
+	
+	@Test
+	public void testHasDiscount3(){
+		assertFalse(cereals.hasDiscount());
+	}
 }
