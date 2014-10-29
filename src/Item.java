@@ -203,6 +203,8 @@ public class Item implements Comparable<Object>{
 		return discount != null;
 	}
 	
+	/** Returns the difference between the unitPrice and the reducedPrice.
+	 * Throws a NullPointerException if no discount is set or if the discount is of SpecialOffer type.*/
 	public Money getDiscountAmount(){
 		if(discount == null || discount instanceof SpecialOffer)
 			throw new NullPointerException("Item has now discount");
