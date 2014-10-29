@@ -198,4 +198,8 @@ public class Item implements Comparable<Object>{
 		return this.equals(anotherItem) ? 0 : unitId.compareTo(((Item)anotherItem).getID());
 			
 	}
+	
+	public boolean hasDiscount(){
+		return discount != null;
+	}
 }
