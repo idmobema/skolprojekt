@@ -8,14 +8,16 @@ public class DiscountResult {
 		this.discountAmount = discountAmount;
 	}
 
-	public String getDiscountDescription() {
-		return discountDescription;
-	}
-
 	public Money getDiscountAmount() {
 		return discountAmount;
 	}
-
 	
-
+	public String toString() {
+		if (discountDescription != null) {
+			return Receipt.formatDiscountLine(discountDescription, discountAmount);
+		}
+		else {
+			return "";
+		}
+	}
 }

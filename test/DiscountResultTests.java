@@ -6,9 +6,9 @@ import org.junit.Test;
 public class DiscountResultTests {
 
 	@Test
-	public void getDiscountDescriptionTest() {
+	public void toStringTest() {
 		DiscountResult dr = new DiscountResult("Rabatt: 2 för 25:-", new Money(0, "SEK"));
-		assertEquals("Rabatt: 2 för 25:-", dr.getDiscountDescription());
+		assertTrue(dr.toString().contains("Rabatt: 2 för 25:-"));
 	}
 	
 	@Test

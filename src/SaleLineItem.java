@@ -38,17 +38,16 @@ public class SaleLineItem implements Comparable<SaleLineItem> {
 	public String toString() {
 		// Lägger till rad med styckvara
 		 
-		if (quantity > Receipt.MAX_QUANTITY)
+		if (quantity > Receipt.MAX_QUANTITY) {
 			throw new IllegalArgumentException("Invalid quantity: " + quantity + ". Value between 1 and " + Receipt.MAX_QUANTITY + " required.");
+		}
 		String itemName = Receipt.checkItemName(item.getItemDesc().getName());
 		Receipt.checkPrices(item.getUnitPrice().getAmount().doubleValue(), getSubTotal().getAmount().doubleValue());
 		String str = Receipt.formatLine(itemName, getSubTotal().toString());
 		if (quantity > 1) // Om större kvantitet än 1, lägg till extrarad med prisuträkning
 			str += "  " + quantity + "st x " + item.getUnitPrice() + "\n";
-		DiscountResult dr = item.getDiscountResult(quantity);
-		if (dr.getDiscountDescription() != null) {
-			str += Receipt.formatLine(dr.getDiscountDescription(), "-" + dr.getDiscountAmount().toString());
-		}
+		str += item.getDiscountResult(quantity);
+		
 		return str;		
 			
 	}

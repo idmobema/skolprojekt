@@ -186,8 +186,13 @@ public class Item implements Comparable<Object>{
 	}
 	
 	public DiscountResult getDiscountResult(int quantity) {
-		//Result for no discount, should return calculated discount if there is one
-		return new DiscountResult(null, new Money(0, "SEK")); 	
+		if (hasDiscount()) {	
+			return new DiscountResult(discount.getOfferName(), getDiscountAmount().times(quantity)); 	
+		}
+		//Result for no discount
+		else {
+			return new DiscountResult(null, new Money(0, "SEK"));
+		}
 	}
 
 
@@ -209,7 +214,7 @@ public class Item implements Comparable<Object>{
 		if(discount == null || discount instanceof SpecialOffer)
 			throw new NullPointerException("Item has now discount");
 		else
-			return unitPrice.minus(reducedPrice);
+			return unitPrice.minus(computeReducedPrice());
 		
 	}
 }

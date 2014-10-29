@@ -44,5 +44,15 @@ public class SaleLineItemTests {
 		
 	}
 	
+	@Test
+	public void testDiscountLine() {
+		Discount disc = new PriceDiscount(10, 2014, 10, 29, 2015, 10, 29);
+		Item item = new Item(new ItemDescription("Pepparkakor", "", new Money(2000, "SEK"), "7310521058507"));
+		item.setDiscount(disc);
+		SaleLineItem sli = new SaleLineItem(item, 1);
+		assertTrue(sli.toString().contains(PriceDiscount.DISCOUNT_NAME));
+		assertTrue(sli.toString().contains("-2.00 SEK"));
+	}
+	
 	
 }
