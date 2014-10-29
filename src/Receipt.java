@@ -138,6 +138,11 @@ public class Receipt {
 		int numberOfSpaces = LINE_WIDTH - first.length() - second.length();		
 		return first + makeSpace(numberOfSpaces) + second + "\n";
 	}
+	
+	// Hjälpmetod för att formatera extrarad för rabatterade varor
+	protected static String formatDiscountLine(String discountDescription, Money discountAmount) {
+		return formatLine("  " + discountDescription, " -" + discountAmount);
+	}
 
 	protected void deleteLine(String itemName) {
 		String lineToRemove = null;
