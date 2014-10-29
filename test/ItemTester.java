@@ -154,4 +154,10 @@ public class ItemTester {
 		assertTrue(equalItems && compared == 0);
 		
 	}
+	
+	@Test
+	public void testHasDiscount(){
+		cereals.setDiscount(priceD);
+		assertTrue(cereals.hasDiscount());
+	}
 }
