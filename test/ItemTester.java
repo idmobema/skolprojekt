@@ -172,4 +172,19 @@ public class ItemTester {
 	public void testHasDiscount3(){
 		assertFalse(cereals.hasDiscount());
 	}
+	
+	@Test(expected = NullPointerException.class)
+	public void testGetDiscountAmountWithoutAnySetDiscount(){
+		assertNull(cereals.getDiscountAmount());
+		
+	}
+	
+	@Test
+	public void testGetDiscountAmount(){
+		cereals.setDiscount(priceD);
+		Money expected = new Money(6.29, "SEK");
+		Money actual = cereals.getDiscountAmount();
+		
+		assertEquals(expected, actual);
+	}
 }

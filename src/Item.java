@@ -202,4 +202,12 @@ public class Item implements Comparable<Object>{
 	public boolean hasDiscount(){
 		return discount != null;
 	}
+	
+	public Money getDiscountAmount(){
+		if(discount == null || discount instanceof SpecialOffer)
+			throw new NullPointerException("Item has now discount");
+		else
+			return unitPrice.minus(reducedPrice);
+		
+	}
 }
