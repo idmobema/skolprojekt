@@ -187,4 +187,88 @@ public class ItemTester {
 		
 		assertEquals(expected, actual);
 	}
+
+	@Test
+	public void testHashCode() {
+		PricedPerPiece cereals2 = new PricedPerPiece("Cer69MAN008", 25.15);
+		assertTrue(cereals.hashCode() == cereals2.hashCode());
+	}
+	
+	@Test
+	public void testEquals() {
+		assertFalse(cereals.equals(null));
+	}
+	
+	@Test
+	public void testEquals2() {
+		assertFalse(cereals.equals(new Money(10.00, "SEK")));
+	}
+	
+	@Test
+	public void testEquals3() {
+		PricedPerPiece cereals2 = new PricedPerPiece("Cer69MAN008", 25.15);
+		cereals.setDiscount(priceD);
+		assertFalse(cereals.equals(cereals2));
+	}
+	
+	@Test
+	public void testEquals4() {
+		PricedPerPiece cereals2 = new PricedPerPiece("Cer69MAN008", 25.15);
+		cereals2.setDiscount(priceD);
+		assertFalse(cereals.equals(cereals2));
+	}
+	
+	@Test
+	public void testEquals5() {
+		PricedPerPiece cereals2 = new PricedPerPiece("Cer69MAN008", 25.15);
+		cereals2.setDiscount(priceD);
+		PriceDiscount priceD2 = new PriceDiscount(10, 2015, 5, 10, 2015, 5, 15);
+		cereals.setDiscount(priceD2);
+		assertFalse(cereals.equals(cereals2));
+	}
+	
+	@Test
+	public void testEquals6() {
+		PricedPerPiece cereals2 = new PricedPerPiece("Cer69MAN008", 25.15);
+		cereals.setDiscount(priceD);
+		assertFalse(cereals2.equals(cereals));
+	}
+	
+	@Test
+	public void testGetDiscountResult() {
+		cereals.setDiscount(specOf);
+		assertTrue(cereals.getDiscountResult(1).toString().contains("0.00"));
+	}
+	
+	@Test
+	public void testGetDiscountResult2() {
+		cereals.setDiscount(specOf);
+		SpecialOffer special = (SpecialOffer) cereals.getDiscount();
+		special.setBuyQuantity(1);
+		special.setGetFreeQuantity(1);
+		assertFalse(cereals.getDiscountResult(1).toString().contains("0.00"));
+	}
+	
+	
+	@Test
+	public void testGetDiscountResult3() {
+		cereals.setDiscount(specOf);
+		SpecialOffer special = (SpecialOffer) cereals.getDiscount();
+		special.setBuyQuantity(2);
+		special.setGetFreeQuantity(1);
+		assertFalse(cereals.getDiscountResult(1).toString().contains("0.00"));
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void testGetDiscountAmount2() {
+		cereals.setDiscount(specOf);
+		cereals.getDiscountAmount();
+	}
+	
+	@Test
+	public void testActivateSpecialOffer() {
+		cereals.setDiscount(priceD);
+		cereals.activateSpecialOffer(3, 2);
+	}
+	
 }
