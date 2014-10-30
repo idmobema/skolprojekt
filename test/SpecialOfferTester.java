@@ -136,6 +136,12 @@ public class SpecialOfferTester {
 	}
 	
 	@Test
+	public void testToString2() {
+		sO = new SpecialOffer("TwoForThePriceOfOne", 2015, 4, 20, 2015, 4, 25);
+		assertTrue(sO.toString().contains("inactive"));
+	}
+	
+	@Test
 	public void testIsOfferActive(){
 		sO = new SpecialOffer("TwoForThePriceOfOne", 2015, 4, 20, 2015, 4, 25);
 		boolean expected = false;
@@ -167,12 +173,52 @@ public class SpecialOfferTester {
 	
 	@Test
 	public void testEquals(){
-		Discount sO1 = new SpecialOffer("TwoForThePriceOfOne", 2015, 4, 20, 2015, 4, 25);
-		Discount sO2 = new SpecialOffer("TwoForThePriceOfOne", 2015, 4, 20, 2015, 4, 25);
+		SpecialOffer sO1 = new SpecialOffer("TwoForThePriceOfOne", 2015, 4, 20, 2015, 4, 25);
+		SpecialOffer sO2 = new SpecialOffer("TwoForThePriceOfOne", 2015, 4, 20, 2015, 4, 25);
+		sO1.setBuyQuantity(3);
+		sO1.setGetFreeQuantity(1);
+		sO2.setBuyQuantity(3);
+		sO2.setGetFreeQuantity(1);
 		
-		assertEquals(sO1, sO2);
+		assertTrue(sO1.equals(sO2));
 	}
-	
+
+	@Test
+	public void testEquals2(){
+		SpecialOffer sO1 = new SpecialOffer("TwoForThePriceOfOne", 2015, 4, 20, 2015, 4, 25);
+		SpecialOffer sO2 = new SpecialOffer("TwoForThePriceOfOne", 2015, 4, 20, 2015, 4, 25);
+		sO1.setBuyQuantity(3);
+		sO1.setGetFreeQuantity(1);
+		sO2.setBuyQuantity(3);
+		sO2.setGetFreeQuantity(2);
+		
+		assertFalse(sO1.equals(sO2));
+	}
+
+	@Test
+	public void testEquals3(){
+		SpecialOffer sO1 = new SpecialOffer("TwoForThePriceOfOne", 2015, 4, 20, 2015, 4, 25);
+		SpecialOffer sO2 = new SpecialOffer("TwoForThePriceOfOne", 2015, 4, 20, 2015, 4, 25);
+		sO1.setBuyQuantity(3);
+		sO1.setGetFreeQuantity(1);
+		sO2.setBuyQuantity(2);
+		sO2.setGetFreeQuantity(1);
+		
+		assertFalse(sO1.equals(sO2));
+	}
+
+	@Test
+	public void testEquals4(){
+		SpecialOffer sO1 = new SpecialOffer("TwoForThePriceOfOne", 2015, 4, 20, 2015, 4, 25);
+		SpecialOffer sO2 = new SpecialOffer("Test", 2015, 4, 20, 2015, 4, 25);
+		sO1.setBuyQuantity(3);
+		sO1.setGetFreeQuantity(1);
+		sO2.setBuyQuantity(3);
+		sO2.setGetFreeQuantity(1);
+		
+		assertFalse(sO1.equals(sO2));
+	}
+
 	@Test
 	public void testHashCode(){
 		Discount sO1 = new SpecialOffer("TwoForThePriceOfOne", 2015, 4, 20, 2015, 4, 25);

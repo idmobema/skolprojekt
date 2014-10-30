@@ -113,5 +113,16 @@ public class DiscountTester {
 		
 		assertNotEquals(d1, d2);
 	}
+	
+	@Test
+	public void testGetBuyQuantityWithPriceDiscount() {
+		d1 = new PriceDiscount(1, 2015, 2, 15, 2015, 2, 20);;
+		assertTrue(d1.getBuyQuantity() == 0);
+	}
 
+	@Test
+	public void testGetFreeQuantityWithPriceDiscount() {
+		d1 = new PriceDiscount(1, 2015, 2, 15, 2015, 2, 20);;
+		assertTrue(d1.getFreeQuantity() == 0);
+	}
 }
