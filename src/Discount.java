@@ -25,6 +25,10 @@ public abstract class Discount{
 	
 	public abstract String getOfferName();
 	
+	public int getBuyQuantity() { return 0; }
+	
+	public int getFreeQuantity() { return 0; }
+	
 	public String toString(){
 		
 		return "Valid through:\n" + timeValidity;

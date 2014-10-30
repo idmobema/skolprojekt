@@ -46,7 +46,8 @@ public class SaleLineItem implements Comparable<SaleLineItem> {
 		String str = Receipt.formatLine(itemName, getSubTotal().toString());
 		if (quantity > 1) // Om större kvantitet än 1, lägg till extrarad med prisuträkning
 			str += "  " + quantity + "st x " + item.getUnitPrice() + "\n";
-		str += item.getDiscountResult(quantity);
+		//if (!item.getDiscountResult(quantity).toString().contains("0.00"))
+			str += item.getDiscountResult(quantity);
 		
 		return str;		
 			

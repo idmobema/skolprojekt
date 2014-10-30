@@ -20,18 +20,27 @@ public class Pos {
 		
 		inventory.put(kexchoklad, new Item(new ItemDescription("Kexchoklad", "", new Money(700, "SEK"), kexchoklad)));
 		inventory.put(butter, new Item(new ItemDescription("Smör", "", new Money(2800, "SEK"), butter)));
-		inventory.put(milk, new Item(new ItemDescription("Mjölk", "", new Money(1000, "SEK"), milk)));
 		
 		Discount disc = new PriceDiscount(10, 2014, 10, 29, 2015, 10, 29);
 		Item item = new Item(new ItemDescription("Pepparkakor", "", new Money(2000, "SEK"), pepparkakor));
 		item.setDiscount(disc);
 		inventory.put(pepparkakor, item);
 		
+		PricedPerPiece item2 = new PricedPerPiece(new ItemDescription("Mjölk", "", new Money(1000, "SEK"), milk));
+		item2.setSpecialOfferDiscount("Rabatt: 3 för 2", 2014, 10, 29, 2015, 10, 29);
+		SpecialOffer special = (SpecialOffer) item2.getDiscount();
+		special.setBuyQuantity(3);
+		special.setGetFreeQuantity(1);
+		inventory.put(milk, item2);
+		
+		
 		//new customer
 		Sale sale = new Sale();
 		
 		//purchase items "Beep!"
 		sale.add(inventory.get(kexchoklad));
+		sale.add(inventory.get(milk));
+		sale.add(inventory.get(milk));
 		sale.add(inventory.get(milk));
 		sale.add(inventory.get(butter));
 		sale.add(inventory.get(kexchoklad));

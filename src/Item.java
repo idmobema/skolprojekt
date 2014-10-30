@@ -186,8 +186,15 @@ public class Item implements Comparable<Object>{
 	}
 	
 	public DiscountResult getDiscountResult(int quantity) {
-		if (hasDiscount()) {	
+		if (hasDiscount() && discount instanceof PriceDiscount) {
 			return new DiscountResult(discount.getOfferName(), getDiscountAmount().times(quantity)); 	
+		}
+		else if (hasDiscount() && discount instanceof SpecialOffer) {
+			SpecialOffer special = (SpecialOffer) discount;
+			if (quantity >= special.getBuyQuantity()) {
+				return new DiscountResult(special.getOfferName(), unitPrice.times(special.getGetFreeQuantity()));
+			}
+			return new DiscountResult(null, new Money(0, "SEK"));
 		}
 		//Result for no discount
 		else {
