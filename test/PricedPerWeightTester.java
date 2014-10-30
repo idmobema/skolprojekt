@@ -28,6 +28,16 @@ public class PricedPerWeightTester {
 			assertNull(pPW);
 		}
 	}
+
+	@Test
+	public void testPricedPerWeightConstWithIllegalArgs2(){
+		try{
+			pPW = new PricedPerWeight("JAs85KRO014", 45, "_=");
+		}
+		catch(IllegalArgumentException iAE){
+			assertNull(pPW);
+		}
+	}
 	
 	@Test
 	public void testGetMeasureUnit(){
@@ -70,6 +80,14 @@ public class PricedPerWeightTester {
 		
 		assertEquals(expected, actual);
 	}
+
+	@Test
+	public void testSetDiscount() {
+		pPW = new PricedPerWeight("App45TIR004", 21, "kilo");
+		Discount discount = new PriceDiscount(10, 2015, 2, 15, 2015, 2, 20);
+		pPW.setDiscount(discount);
+		assertTrue(pPW.hasDiscount());
+	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void testSetDiscountWithSpecialOfferType(){
@@ -90,4 +108,5 @@ public class PricedPerWeightTester {
 		
 		assertEquals(expected, actual);
 	}
+
 }
