@@ -57,6 +57,13 @@ public class PriceDiscountTester {
 
 		((PriceDiscount) d3).setPercentage(.99);
 	}
+
+	@Test (expected = IllegalArgumentException.class)
+	public void testSetPercentageWithIllegalValues2(){
+		d3 = new PriceDiscount(1, 2015, 2, 15, 2015, 2, 20);
+
+		((PriceDiscount) d3).setPercentage(76.0);
+	}
 	
 	@Test
 	public void testGetTimeValidity(){
@@ -93,7 +100,45 @@ public class PriceDiscountTester {
 		d3 = new PriceDiscount(15, 2015, 2, 15, 2015, 2, 20);
 		d1 = new PriceDiscount(15, 2015, 2, 15, 2015, 2, 20);
 		
-		assertEquals(d3, d1);
+		assertTrue(d3.equals(d1));
 	}
 
+	@Test
+	public void testEquals2(){
+		d3 = new PriceDiscount(15, 2015, 2, 15, 2015, 2, 20);
+		d1 = new PriceDiscount(14, 2015, 2, 15, 2015, 2, 20);
+		
+		assertFalse(d3.equals(d1));
+	}
+
+	@Test
+	public void testEquals3(){
+		d3 = new PriceDiscount(15, 2015, 2, 15, 2015, 2, 20);
+		d1 = new PriceDiscount(15, 2015, 2, 15, 2015, 2, 19);
+		
+		assertFalse(d3.equals(d1));
+	}
+
+	@Test
+	public void testEquals4(){
+		d3 = new PriceDiscount(15, 2015, 2, 15, 2015, 2, 20);
+		
+		assertFalse(d3.equals(null));
+	}
+	
+	@Test
+	public void testEquals5(){
+		d3 = new PriceDiscount(15, 2015, 2, 15, 2015, 2, 20);
+		
+		assertFalse(d3.equals(new Money(10.0, "SEK")));
+	}
+	
+	
+	
+	@Test
+	public void testHashCode() {
+		d3 = new PriceDiscount(15, 2015, 2, 15, 2015, 2, 20);
+		d1 = new PriceDiscount(15, 2015, 2, 15, 2015, 2, 20);
+		assertTrue(d3.hashCode() == d1.hashCode());
+	}
 }

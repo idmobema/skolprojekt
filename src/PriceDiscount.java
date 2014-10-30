@@ -39,7 +39,8 @@ public class PriceDiscount extends Discount{
 	
 	@Override
 	public boolean equals(Object obj){
-		if(!(obj instanceof PriceDiscount) || obj == null || !(((PriceDiscount) obj).getOfferName().equals("Price Reduction")))
+		// Har kommenterat bort onåbar del av villkoret
+		if(!(obj instanceof PriceDiscount)) /*|| obj == null || !(((PriceDiscount) obj).getOfferName().equals("Price Reduction"))*/
 			return false;
 		
 		PriceDiscount another = (PriceDiscount) obj;
@@ -47,10 +48,10 @@ public class PriceDiscount extends Discount{
 		boolean samePercentage = percentage == another.getPercentage();
 		
 		return sameTimeValidity && samePercentage;
-	}
+	}	
 	
-	@Override
-	public int hashCode(){
+	// Denna hashCode() funkar inte som tänkt, kommenterar bort
+	/*public int hashCode(){
 		int hash = 1;
 		
 		hash = hash * 7 + (int)(percentage * 10);
@@ -59,9 +60,14 @@ public class PriceDiscount extends Discount{
 		
 		return hash;
 				
+	}*/
+	
+	// Tillfällig implementation av hashCode()
+	@Override
+	public int hashCode() {
+		return (int)(percentage * 10) * 1337;
 	}
 	
-
 	@Override
 	public String getOfferName() {
 		
