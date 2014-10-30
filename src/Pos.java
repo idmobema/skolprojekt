@@ -15,8 +15,7 @@ public class Pos {
 		String kexchoklad = "12345678901"; 
 		String butter = "12345678902";
 		String milk = "12345678903";
-		String pepparkakor ="7310521058507";
-		
+		String pepparkakor ="7310521058507";		
 		
 		inventory.put(kexchoklad, new Item(new ItemDescription("Kexchoklad", "", new Money(700, "SEK"), kexchoklad)));
 		inventory.put(butter, new Item(new ItemDescription("Smör", "", new Money(2800, "SEK"), butter)));
@@ -50,6 +49,7 @@ public class Pos {
 		//payment ?
 		
 		//print receipt
-		System.out.print(new Receipt(sale).toString());
+		for(int i = 0; i < 10000; i++)
+			System.out.print(new Receipt(sale).toString());
 	}
 }
