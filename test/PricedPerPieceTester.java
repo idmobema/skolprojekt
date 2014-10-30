@@ -183,4 +183,10 @@ public class PricedPerPieceTester {
 		assertEquals(expected, actual);
 	}
 
+	@Test
+	public void testNewConstructor() {
+		Item item = new PricedPerPiece(new ItemDescription("Mjölk", "", new Money(1000, "SEK"), "12345678903"));
+		
+		assertTrue(item.toString().contains("10.00"));
+	}
 }
