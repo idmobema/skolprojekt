@@ -202,7 +202,6 @@ public class ReceiptTests {
 	@Test
 	public void testFormattingOfDiscountLine() {
 		String discountLine = Receipt.formatDiscountLine("Rabatt: 3 för 2", Money.getCrowns(9.9));
-		System.out.println(discountLine);
 		assertTrue(discountLine.contains("Rabatt: 3 för 2"));
 		assertTrue(discountLine.contains("-9.90"));
 	}
